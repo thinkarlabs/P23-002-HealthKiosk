@@ -12,7 +12,7 @@ The below are instructions to get started with the development of this project.
         ```
     2. Naviate to the folder
         ```
-        cd P23-001-RehabTracker
+        cd P23-002-HealthKiosk
         ```
     3. Create an environment by running
         ```
