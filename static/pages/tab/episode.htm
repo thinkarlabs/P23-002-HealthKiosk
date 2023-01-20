@@ -1,0 +1,66 @@
+{% extends "static/pages/_common/base_tab.htm" %}
+
+{% block body %}
+<main class="container-full">
+<div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
+
+<div class="row mt-4 py-0">
+	<div class="col-3 text-center">
+	  <img src="/static/img/maya.jpg" style="width:250px;height:250px" class="card-img-top img-fluid rounded-circle" alt="...">
+	  </br>
+	  <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg" style="width:250px;height:250px" class="card-img-top mt-4" alt="...">
+
+	</div>
+
+	<div class="col-6 text-center">
+	
+		<div class="border border-dark border-3" style="height:100px">
+		<figure class="text-center p-2">
+		  <blockquote class="blockquote">
+			<p>Please explain your symptoms of pain and where it occours.</p>
+		  </blockquote>
+		</figure>
+		</div>
+		
+		<div class="row mt-4">
+			<div class="btn-group" role="group" aria-label="Basic example">
+			  <button type="button" class="btn btn-primary"><i class="bi bi-mic-mute"></i></button>
+			  <button type="button" class="btn btn-primary"><i class="bi bi-volume-mute"></i></button>
+			  <button type="button" class="btn btn-primary">Start/Finish</button>
+			</div>
+		</div>
+
+		<div class="border border-dark border-3 mt-4" style="height:100px">
+			<figure class="text-center p-2">
+			  <blockquote class="blockquote">
+				<p>I get pain in the stomach whenever I eat anything, including drinking water.</p>
+			  </blockquote>
+			</figure>
+		</div>
+
+	  <button class="bg-primary text-light btn-lg mt-4" style="width:220px" data-nav="tab.episode.wait">Submit</button>
+	  
+	  <button class="bg-primary text-light btn-lg mt-4" style="width:220px" data-nav="tab.profiles">Close</button>
+
+
+	</div>
+
+	<div class="col-3 text-center">
+		<div class="text-start">
+		<h3>Transcript</h3>
+		<textarea rows="7" class="w-100 h-100 border border-dark border-3" style="min-height:450px">
+[16:43] Patient : I am having a pain in the chest and in the stomach.		
+[16:42] Maya : How are you doing today?		
+		</textarea>
+		</div>
+
+
+	</div>
+
+
+</div>
+</main>
+
+{% endblock %}	
+
+
