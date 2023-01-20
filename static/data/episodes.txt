@@ -1,0 +1,42 @@
+{
+  "header": "Applicants",
+  "episodes": [
+    {
+      "ep_name": "Rathnamma K T",
+      "ep_pic": "https://live.staticflickr.com/1815/41965037200_6a698f7afb_b.jpg",
+      "ep_gender": "Female",
+      "ep_age": "82",
+	  "ep_date": "12/Jan/2023",
+	  "ep_time": "4:35 PM",
+	  "ep_followup": "Y",
+	  "ep_smry": "Patient had a stomach ache and was not able to consume even water. No fever. Patient is diabetic.",
+	  "ep_doc": "Dr Sriram (General Physician)",
+	  "ep_action": "Refered to Dr Satish along with a scan of the abdomen to check for hernia."
+    },
+    {
+      "ep_name": "Thimmapa T",
+      "ep_pic": "https://c2.peakpx.com/wallpaper/916/968/884/male-portrait-india-rural-gypsy-wallpaper-preview.jpg",
+      "ep_gender": "Male",
+      "ep_age": "22",
+	  "ep_date": "21/Dec/2022",
+	  "ep_time": "6:35 PM",
+	  "ep_followup": "N",
+	  "ep_smry": "Patient was out of breath and had boils all over their hand. It started after a meal. Patient is allergic to peanuts.",
+	  "ep_doc": "Dr Sailatha (Diabetician)",
+	  "ep_action": "Refered to Dr Sneha to immediate allergy medication and follow up."
+    },
+    {
+      "ep_name": "Meenakshi K",
+      "ep_pic": "https://i0.hippopx.com/photos/277/818/412/children-portrait-artistic-girl-preview.jpg",
+      "ep_gender": "Female",
+      "ep_age": "7",
+	  "ep_date": "08/Dec/2022",
+	  "ep_time": "7:20 AM",
+	  "ep_followup": "N",
+	  "ep_smry": "Patient had an eye infection with swelling. Was not able to open the eyes.",
+	  "ep_doc": "Dr Pallavi (Eye specialist)",
+	  "ep_action": "Refered to Dr Nitya with a recommendation of immeidate eye drops."
+    }
+  ],  
+  "empty": false
+}
