@@ -1,0 +1,40 @@
+{% extends "static/pages/_common/base_tab.htm" %}
+
+{% block body %}
+<main class="container-full">
+<div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
+
+<div class="row mt-4 py-0">
+	<div class="col-9 text-center">
+	  <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg" 
+		style="width:800px;height:500px" class="border-light border-3" alt="...">
+
+	  <img src="https://cdn.crispedge.com/696969.png" 
+		style="width:250px;height:250px;position:absolute;top:300px;left:600px" class="border-light border-3" alt="...">
+	</div>
+
+	<div class="col-3">
+		<div class="text-start">
+		<h3>Transcript</h3>
+		<textarea rows="7" class="w-100 h-100 border border-dark border-3" style="min-height:400px">
+[16:58] Patient : Not that I know of.
+[16:57] Doctor : I reviewed your summary and I have a few questions. Do you have a family history of such issues?
+--------------------------------------------
+[16:43] Patient : I am having a pain in the chest and in the stomach.		
+[16:42] Maya : How are you doing today?		
+		</textarea>
+		</div>
+
+	  <button class="bg-primary text-light btn-lg mt-4" data-nav="tab.episode.confirm">Confirm</button>
+	  
+	  <button class="bg-primary text-light btn-lg mt-4" data-nav="tab.episode.wait">Close</button>
+
+	</div>
+
+
+</div>
+</main>
+
+{% endblock %}	
+
+
