@@ -22,5 +22,6 @@ CONNECTION_STRING = os.getenv('CONNECTION_STRING')
 async def index(request: Request):
   return FileResponse('static/index.html')
 
-#if __name__ == "__main__":
-#    uvicorn.run("main:web_app", host="0.0.0.0", port=port, reload=False)
+import uvicorn
+if __name__ == "__main__":
+  uvicorn.run("main:web_app", host="0.0.0.0", port=port, reload=False)

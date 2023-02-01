@@ -50,6 +50,54 @@ function bind_events(){
 }
 
 function x_nav(_route){
+	
+	//tab.profiles
+	if (_route=='tab.profiles'){
+		otp =  $(".form-control").val();
+		$.ajax({
+			url: "http://127.0.0.1:3000/verify",
+			type: "POST",
+			crossDomain: true,
+			data: JSON.stringify({ 'number': otp }),
+			dataType: "json",
+			contentType: "application/json",
+			success: function (response) {
+				//var resp = JSON.parse(response);
+				new_x_nav(_route);
+				//alert(resp.status);
+			},
+			error: function (xhr, status) {
+				alert("error");
+				
+			}
+		});				
+	}
+	if (_route=='tab.otp'){
+		sun = $(".form-control").val();
+		$.ajax({
+			url: "http://127.0.0.1:3000/phone_verification",
+			type: "POST",
+			crossDomain: true,
+			data: JSON.stringify({ 'number': sun }),
+			dataType: "json",
+			contentType: "application/json",
+			success: function (response) {
+				//var resp = JSON.parse(response)
+				new_x_nav(_route);
+				//alert(resp.status);
+			},
+			error: function (xhr, status) {
+				alert("error");
+				
+			}
+		});				
+	}else{
+		new_x_nav(_route);
+	}
+}
+
+
+function new_x_nav(_route){
 	//If a route key is valid, add to history and load the route.
 	routeKey = _route.split('?')[0]
 	if (x_routes[routeKey] === undefined){x_log('Invalid Route..' + routeKey,1); return;}
