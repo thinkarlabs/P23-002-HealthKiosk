@@ -47,16 +47,16 @@ def send_otp(request: Request, project: Phone = Body(...)):
 def send_otp(request: Request, project: Phone = Body(...)):
     project = jsonable_encoder(project)
     token =  project['number']
-    c_code = "+91"
-    phone_number = "####"  # session.get("phone_number")
-    verified_number = c_code + phone_number  #"+919079257###"
-    """try:
+    #c_code = "+91"
+    #phone_number = "####"  # session.get("phone_number")
+    verified_number = request.app.verified_number#c_code + phone_number  #"+919079257###"
+    try:
         verification_check = request.app.client.verify.v2.services(request.app.verify_sid) \
         .verification_checks \
         .create(to=verified_number, code=token)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Project with ID  not found")
-    print(verification_check.status)"""
+    print(verification_check.status)
 
     return {'condition': True}
 

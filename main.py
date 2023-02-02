@@ -22,6 +22,11 @@ CONNECTION_STRING = os.getenv('CONNECTION_STRING')
 async def index(request: Request):
   return FileResponse('static/index.html')
 
+
+
 import uvicorn
+
 if __name__ == "__main__":
-  uvicorn.run("main:web_app", host="0.0.0.0", port=port, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+

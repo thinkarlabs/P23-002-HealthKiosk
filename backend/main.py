@@ -19,7 +19,7 @@ app.auth_token = config['TWILIO_AUTH_TOKEN']
 app.verify_sid = config['YOUR_VERIFY_SID']
 
 
-
+app.verified_number = config['SM_TO']
 app.client = Client(app.account_sid, app.auth_token)
 
 from fastapi.middleware.cors import CORSMiddleware

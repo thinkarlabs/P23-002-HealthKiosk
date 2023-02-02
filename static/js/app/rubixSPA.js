@@ -54,8 +54,9 @@ function x_nav(_route){
 	//tab.profiles
 	if (_route=='tab.profiles'){
 		otp =  $(".form-control").val();
+
 		$.ajax({
-			url: "http://127.0.0.1:3000/verify",
+			url: window.CONFIG.URL + "/verify",
 			type: "POST",
 			crossDomain: true,
 			data: JSON.stringify({ 'number': otp }),
@@ -74,8 +75,9 @@ function x_nav(_route){
 	}
 	if (_route=='tab.otp'){
 		sun = $(".form-control").val();
+		debugger;
 		$.ajax({
-			url: "http://127.0.0.1:3000/phone_verification",
+			url: window.CONFIG.URL + "/phone_verification",
 			type: "POST",
 			crossDomain: true,
 			data: JSON.stringify({ 'number': sun }),

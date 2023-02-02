@@ -9,18 +9,20 @@ print("Your OTP is - ",otp)
 from dotenv import dotenv_values
 config = dotenv_values(".env")
 
-
+import pdb;pdb.set_trace()
 
 account_sid = config['YOUR_ACCOUNT_SID']
 auth_token = config['TWILIO_AUTH_TOKEN']
 verify_sid = config['YOUR_VERIFY_SID']
+from_ = config['NO_FROM']
+to = config['SM_TO']
 
 client = Client(account_sid, auth_token)
 
 message = client.messages.create(
          body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
-         from_='+13512222972',
-         to='+919079257789'
+         from_=from_,
+         to=to
      )
 
 print(message.sid)
