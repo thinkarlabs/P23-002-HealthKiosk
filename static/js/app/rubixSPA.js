@@ -56,7 +56,7 @@ function x_nav(_route){
 		otp =  $(".form-control").val();
 
 		$.ajax({
-			url: window.CONFIG.URL + "/verify",
+			url: "http://127.0.0.1:3000/verify",
 			type: "POST",
 			crossDomain: true,
 			data: JSON.stringify({ 'number': otp }),
@@ -77,7 +77,7 @@ function x_nav(_route){
 		sun = $(".form-control").val();
 		debugger;
 		$.ajax({
-			url: window.CONFIG.URL + "/phone_verification",
+			url: "http://127.0.0.1:3000/phone_verification",
 			type: "POST",
 			crossDomain: true,
 			data: JSON.stringify({ 'number': sun }),
