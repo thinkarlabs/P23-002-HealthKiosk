@@ -49,7 +49,7 @@ function bind_events(){
 	});
 }
 
-function x_nav(_route){
+function add_x_nav(_route){
 	
 	//tab.profiles
 	if (_route=='tab.profiles'){
@@ -98,8 +98,8 @@ function x_nav(_route){
 	}
 }
 
-
-function new_x_nav(_route){
+//function new_x_nav(_route){
+function x_nav(_route){
 	//If a route key is valid, add to history and load the route.
 	routeKey = _route.split('?')[0]
 	if (x_routes[routeKey] === undefined){x_log('Invalid Route..' + routeKey,1); return;}
