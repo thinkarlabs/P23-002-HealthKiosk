@@ -74,3 +74,6 @@ class Settings(BaseSettings):
 class UserResponse(BaseModel):
     status: str
     user: User
+
+class ChatText(BaseModel):
+    chat: str

@@ -3,12 +3,14 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, Body, Request, Form, Response, HTTPException, status, Depends
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse
+from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
-router = APIRouter()
 
+from  app.chat import get_response
+router = APIRouter()
+#523144
 
 
 @router.post("/phone_verification", response_description="OTP request", status_code=status.HTTP_201_CREATED, response_model=Otp)
@@ -42,7 +44,6 @@ def send_otp(request: Request, phone: Phone = Body(...)):
 def verify_otp(request: Request, phone: Phone = Body(...)):
     project = jsonable_encoder(phone)
     token =  int(project['number'])
-    #import pdb;pdb.set_trace()
     new_project = request.app.database["patient"].find_one({'otp': token})
     if new_project and new_project['otp']==token:
         return {'condition': True}
@@ -72,7 +73,6 @@ def create_user(request: Request, payload: User = Body(...)):
 @router.post('/login')
 def login(request: Request, payload: Phone, response: Response, Authorize: AuthJWT = Depends()):
     # Check if the user exist
-    import pdb;pdb.set_trace()
     ACCESS_TOKEN_EXPIRES_IN =  int(request.app.ACCESS_TOKEN_EXPIRES_IN)
     REFRESH_TOKEN_EXPIRES_IN =  int(request.app.REFRESH_TOKEN_EXPIRES_IN)
     otp = payload.number + 64
@@ -117,4 +117,17 @@ def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = De
     response.set_cookie('logged_in', '', -1)
 
     return {'status': 'success'}
+
+
+
+
+@router.post("/predict", status_code=status.HTTP_200_OK)
+def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.require_user)):
+  import pdb;pdb.set_trace()
+  
+  #text = request.get_json().get("message")  # TODO: check if text is valid
+  #import pdb;pdb.set_trace()
+  response = get_response(chat.chat)
+  message = {"answer": response}
+  return message
 
