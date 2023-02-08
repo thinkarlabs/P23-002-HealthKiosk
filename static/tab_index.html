@@ -21,5 +21,74 @@
 	<script src="https://mozilla.github.io/nunjucks/files/nunjucks.min.js" defer></script>
 	<script src="/static/js/app/routes.js?v0.02d" defer></script>
 	<script src="/static/js/app/rubixSPA.js?v0.02a" defer></script>
+
+
+	<script>
+		//--------------------
+		// GET USER MEDIA CODE
+		//--------------------
+			navigator.getUserMedia = ( navigator.getUserMedia ||
+							   navigator.webkitGetUserMedia ||
+							   navigator.mozGetUserMedia ||
+							   navigator.msGetUserMedia);
+  
+		var video;
+		var webcamStream;
+			  
+		function startWebcam() {
+		  if (navigator.getUserMedia) {
+			 navigator.getUserMedia (
+  
+				// constraints
+				{
+				   video: true,
+				   audio: false
+				},
+  
+				// successCallback
+				function(localMediaStream) {
+					video = document.querySelector('video');
+				   video.srcObject=localMediaStream;
+				   webcamStream = localMediaStream;
+				},
+  
+				// errorCallback
+				function(err) {
+				   console.log("The following error occured: " + err);
+				}
+			 );
+		  } else {
+			 console.log("getUserMedia not supported");
+		  }  
+		}
+			  
+		function stopWebcam() {
+			webcamStream.stop();
+		}
+		//---------------------
+		// TAKE A SNAPSHOT CODE
+		//---------------------
+		var canvas, ctx;
+  
+		function init() {
+		  // Get the canvas and obtain a context for
+		  // drawing in it
+		  canvas = document.getElementById("myCanvas");
+		  ctx = canvas.getContext('2d');
+		}
+		//window.onload=init;
+		function snapshot() {
+			canvas = document.getElementById("myCanvas");
+		  ctx = canvas.getContext('2d');
+		   // Draws current image from the video element into the canvas
+		  ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+		  //var myImage = canvas.toDataURL("image/png");
+		  base64 = canvas.toDataURL().split(';base64,')[1]; 
+		  document.getElementById('data64').innerHTML = 
+                '<input type="hidden" id="custId" name="custId" value="' + base64 + '"/>';
+		}
+  
+	</script>
+
   </body>
 </html>
