@@ -41,8 +41,9 @@ class Profile(BaseModel):
     #id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
     number: str = Field(...)
-    age: str = Field(...)
+    age: int = Field(...)
     gender: str = Field(...)
+    image:str = Field(...)
 
 
 class Otp(BaseModel):

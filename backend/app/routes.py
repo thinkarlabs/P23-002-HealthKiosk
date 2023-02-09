@@ -7,7 +7,6 @@ from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatTex
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
-
 from  app.chat import get_response
 router = APIRouter()
 #523144
@@ -70,6 +69,7 @@ def create_user(request: Request, payload: User = Body(...)):
         new_project = request.app.database["patient"].insert_one(payload.dict()) #pymongo object
     return {'condition': True}
 
+
 @router.post('/login')
 def login(request: Request, payload: Phone, response: Response, Authorize: AuthJWT = Depends()):
     # Check if the user exist
@@ -103,6 +103,7 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
     # Send both access
     return {'status': 'success', 'access_token': access_token}
 
+
 @router.get('/me', response_model=UserResponse)
 def get_me(request: Request, user_id: str = Depends(oauth2.require_user)):
     new_project = request.app.database["patient"].find_one({'number':int(user_id)})
@@ -110,24 +111,20 @@ def get_me(request: Request, user_id: str = Depends(oauth2.require_user)):
     return {"status": "success", "user": new_project}
 
 
-
 @router.get('/logout', status_code=status.HTTP_200_OK)
 def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = Depends(oauth2.require_user)):
     Authorize.unset_jwt_cookies()
     response.set_cookie('logged_in', '', -1)
-
     return {'status': 'success'}
 
 
-
-
-@router.post("/predict", status_code=status.HTTP_200_OK)
+@router.post("/predict", status_code=status.HTTP_200_OK, response_model=ChatText)
 def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.require_user)):
-  import pdb;pdb.set_trace()
-  
-  #text = request.get_json().get("message")  # TODO: check if text is valid
-  #import pdb;pdb.set_trace()
-  response = get_response(chat.chat)
-  message = {"answer": response}
-  return message
+    #text = request.get_json().get("message")  # TODO: check if text is valid
+    #import pdb;pdb.set_trace()
+    response = get_response(chat.chat)
+    message = {"chat": response}
+    return message
+
+
 
