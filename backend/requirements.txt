@@ -3,7 +3,7 @@ python-multipart
 pymongo[srv]
 fastapi
 uvicorn
-twilio
+twilio==6.63.2
 passlib
 bcrypt
 fastapi-jwt-auth
