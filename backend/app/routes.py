@@ -55,6 +55,16 @@ def verify_otp(request: Request, phone: Phone = Body(...)):
 def create_user(request: Request, payload: User = Body(...)):
     otp = random.randint(100000,999999)
     print("Your OTP is - ",otp)
+    c_code = "+91"
+    verified_number = c_code + payload.number
+    try:
+        message = request.app.client.messages.create(
+            body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
+            from_=request.app.twilio_number,
+            to=verified_number
+        )
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')
     new_project = request.app.database["patient"].find_one({'number': payload.number}) #dict
     if new_project:
         new_project['updated_at'] = datetime.utcnow()
