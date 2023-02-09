@@ -71,7 +71,7 @@ def create_user(request: Request, payload: User = Body(...)):
         new_project['h_pass'] =  utils.hash_password(otp)
         new_project['otp'] = otp+64
         new_project = request.app.database["patient"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
-        request.app.database["patient"].update({ 'number': user_id },{$set: { "testa.0.item3" : "item3"} } )
+        
     else:
         payload.created_at = datetime.utcnow()
         payload.updated_at = payload.created_at
@@ -137,3 +137,18 @@ def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.requ
     message = {"chat": response}
     return message
 
+
+@router.post("/profile", status_code=status.HTTP_200_OK, response_model=Otp)
+def profile(request: Request, profile: Profile, user_id: str = Depends(oauth2.require_user)):
+    project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
+    { '$push': { 
+        'profile': {
+            "name": profile.name,
+            "image": profile.image,
+            "age": profile.age,
+            "gender": profile.gender
+        }
+    }}
+    )
+    return {'condition': True}
+ 
