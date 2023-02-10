@@ -12,51 +12,13 @@ router = APIRouter()
 #523144
 
 
-@router.post("/phone_verification", response_description="OTP request", status_code=status.HTTP_201_CREATED, response_model=Otp)
-def send_otp(request: Request, phone: Phone = Body(...)):
-    project = jsonable_encoder(phone)
-    phone_number =  project['number']
-    c_code = "+91"
-    verified_number = c_code + phone_number
-    """try:
-        message = request.app.client.messages.create(
-            body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
-            from_=request.app.twilio_number,
-            to=verified_number
-        )
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
-    #request.app.database["patient"].find_one_and_update({'number': project.number}, {"$set": dict(project)})
-    otp = random.randint(100000,999999)
-    print("Your OTP is - ",otp)
-    project.update({"otp": otp})
-    new_project = request.app.database["patient"].find_one({'number': phone.number}) #dict
-    if new_project:
-        new_project = request.app.database["patient"].find_one_and_update({'number': phone.number}, {"$set": project}) #dict
-    else:
-        new_project = request.app.database["patient"].insert_one(project) #pymongo object
-   
-    return {'condition': True}
-
-
-@router.post("/verify", response_description="Otp verification", status_code=status.HTTP_201_CREATED, response_model=Otp)
-def verify_otp(request: Request, phone: Phone = Body(...)):
-    project = jsonable_encoder(phone)
-    token =  int(project['number'])
-    new_project = request.app.database["patient"].find_one({'otp': token})
-    if new_project and new_project['otp']==token:
-        return {'condition': True}
-    else:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail='Invalid OTP')
-
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
 def create_user(request: Request, payload: User = Body(...)):
     otp = random.randint(100000,999999)
     print("Your OTP is - ",otp)
     c_code = "+91"
-    verified_number = c_code + payload.number
+    verified_number = c_code + str(payload.number)
     try:
         message = request.app.client.messages.create(
             body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
