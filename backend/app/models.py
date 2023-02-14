@@ -39,11 +39,14 @@ class User(BaseModel):
     
 class Profile(BaseModel):
     #id: str = Field(default_factory=uuid.uuid4, alias="_id")
-    name: str = Field(...)
-    age: int = Field(...)
-    gender: str = Field(...)
-    image:str = Field(...)
-
+    #name: str = Field(...)
+    ##age: int = Field(...)
+    #gender: str = Field(...)
+    #image:str = Field(...)
+    profile_name: str = Field(...)
+    profile_pic: str = Field(...)
+    profile_gender: str = Field(...)
+    profile_age: int = Field(...)
 
 class Otp(BaseModel):
     condition: bool
@@ -77,3 +80,8 @@ class UserResponse(BaseModel):
 
 class ChatText(BaseModel):
     chat: str
+
+
+class ProfileItems(BaseModel):
+    number: int
+    profiles: list[Profile] | None = None

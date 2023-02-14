@@ -42,7 +42,6 @@ class UserNotFound(Exception):
 
 def require_user(Authorize: AuthJWT = Depends()):
     try:
-        #import pdb;pdb.set_trace()
         from pymongo import MongoClient
         mongodb_client = MongoClient(os.getenv('CONNECTION_STRING'))
         database = mongodb_client[os.getenv('DB_NAME')]

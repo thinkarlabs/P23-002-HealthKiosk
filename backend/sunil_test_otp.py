@@ -15,7 +15,7 @@ account_sid = config['YOUR_ACCOUNT_SID']
 auth_token = config['TWILIO_AUTH_TOKEN']
 verify_sid = config['YOUR_VERIFY_SID']
 from_ = config['TWILIO_NUMBER']
-to = config['SM_TO']
+to = "+917898153990"#config['SM_TO']
 
 client = Client(account_sid, auth_token)
 
