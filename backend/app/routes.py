@@ -1,62 +1,25 @@
 import random
+import os
+import json
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Body, Request, Form, Response, HTTPException, status, Depends
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText
+from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
 from  app.chat import get_response
+
 router = APIRouter()
-#523144
-
-
-@router.post("/phone_verification", response_description="OTP request", status_code=status.HTTP_201_CREATED, response_model=Otp)
-def send_otp(request: Request, phone: Phone = Body(...)):
-    project = jsonable_encoder(phone)
-    phone_number =  project['number']
-    c_code = "+91"
-    verified_number = c_code + phone_number
-    """try:
-        message = request.app.client.messages.create(
-            body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
-            from_=request.app.twilio_number,
-            to=verified_number
-        )
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
-    #request.app.database["patient"].find_one_and_update({'number': project.number}, {"$set": dict(project)})
-    otp = random.randint(100000,999999)
-    print("Your OTP is - ",otp)
-    project.update({"otp": otp})
-    new_project = request.app.database["patient"].find_one({'number': phone.number}) #dict
-    if new_project:
-        new_project = request.app.database["patient"].find_one_and_update({'number': phone.number}, {"$set": project}) #dict
-    else:
-        new_project = request.app.database["patient"].insert_one(project) #pymongo object
-   
-    return {'condition': True}
-
-
-@router.post("/verify", response_description="Otp verification", status_code=status.HTTP_201_CREATED, response_model=Otp)
-def verify_otp(request: Request, phone: Phone = Body(...)):
-    project = jsonable_encoder(phone)
-    token =  int(project['number'])
-    new_project = request.app.database["patient"].find_one({'otp': token})
-    if new_project and new_project['otp']==token:
-        return {'condition': True}
-    else:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT,
-                            detail='Invalid OTP')
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
-def create_user(request: Request, payload: User = Body(...)):
+def create_user(request: Request, payload: Phone = Body(...)):
     otp = random.randint(100000,999999)
     print("Your OTP is - ",otp)
     c_code = "+91"
-    verified_number = c_code + payload.number
+    verified_number = c_code + str(payload.number)
     try:
         message = request.app.client.messages.create(
             body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
@@ -73,11 +36,15 @@ def create_user(request: Request, payload: User = Body(...)):
         new_project = request.app.database["patient"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
         
     else:
-        payload.created_at = datetime.utcnow()
-        payload.updated_at = payload.created_at
-        payload.h_pass = utils.hash_password(otp)
-        payload.otp = otp+64
-        new_project = request.app.database["patient"].insert_one(payload.dict()) #pymongo object
+        created_at= datetime.utcnow()
+        user_dict = {
+            'number' : payload.number,
+            'created_at' : created_at,
+            'updated_at': created_at,
+            'h_pass' : utils.hash_password(otp),
+            'otp' : otp+64
+        }
+        new_project = request.app.database["patient"].insert_one(user_dict) #pymongo object
     return {'condition': True}
 
 
@@ -112,6 +79,15 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
                         ACCESS_TOKEN_EXPIRES_IN * 60, '/', None, False, False, 'lax')
 
     # Send both access
+    # Python code to illustrate with() alongwith write()
+    if new_project['profile']:
+        data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
+    else:
+        data = {}
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
+    with open(path, "w") as f:
+        f.write(json.dumps(data, indent=4))
+    
     return {'status': 'success', 'access_token': access_token}
 
 
@@ -132,23 +108,44 @@ def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = De
 @router.post("/predict", status_code=status.HTTP_200_OK, response_model=ChatText)
 def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.require_user)):
     #text = request.get_json().get("message")  # TODO: check if text is valid
-    #import pdb;pdb.set_trace()
     response = get_response(chat.chat)
     message = {"chat": response}
     return message
 
 
 @router.post("/profile", status_code=status.HTTP_200_OK, response_model=Otp)
-def profile(request: Request, profile: Profile, user_id: str = Depends(oauth2.require_user)):
+def add_profile(request: Request, profile: Profile, user_id: str = Depends(oauth2.require_user)):
     project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
     { '$push': { 
         'profile': {
-            "name": profile.name,
-            "image": profile.image,
-            "age": profile.age,
-            "gender": profile.gender
+            "profile_name": profile.profile_name,
+            "profile_pic": profile.profile_pic,
+            "profile_age": profile.profile_age,
+            "profile_gender": profile.profile_gender
         }
     }}
     )
+
+    new_project = request.app.database["patient"].find_one({'number':int(user_id)})
+    if new_project['profile']:
+        data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
+    else:
+        data = {}
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
+    with open(path, "w") as f:
+        f.write(json.dumps(data, indent=4))
     return {'condition': True}
+
+
+#from typing import List
+#@router.get("/profile", status_code=status.HTTP_200_OK, response_model=List[Profile])
+@router.get("/profile")
+def get_profiles(request: Request,response: Response,  user_id: str = Depends(oauth2.require_user)):
+    new_project = request.app.database["patient"].find_one({'number' : int(user_id)})
+    import os
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
+    with open(path, "w") as f:
+        f.write("Hello World!!!")
+    return new_project['profile']
+
  
