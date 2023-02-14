@@ -16,18 +16,18 @@ router = APIRouter()
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
 def create_user(request: Request, payload: Phone = Body(...)):
-    otp = random.randint(100000,999999)
+    otp = 12 #random.randint(100000,999999)
     print("Your OTP is - ",otp)
     c_code = "+91"
     verified_number = c_code + str(payload.number)
-    try:
+    """try:
         message = request.app.client.messages.create(
             body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
             from_=request.app.twilio_number,
             to=verified_number
         )
     except Exception:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
     new_project = request.app.database["patient"].find_one({'number': payload.number}) #dict
     if new_project:
         new_project['updated_at'] = datetime.utcnow()
@@ -80,7 +80,8 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
 
     # Send both access
     # Python code to illustrate with() alongwith write()
-    if new_project['profile']:
+    #import pdb;pdb.set_trace()
+    if new_project.get('profile', None): #new_project['profile']:
         data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
     else:
         data = {}
