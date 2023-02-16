@@ -1,0 +1,72 @@
+
+<main class="container-full">
+    <div id='x-main' class="container-md mt-5 p-3">
+      <webcam 
+      [height]="0"
+      [width]="0"
+      [trigger]="triggerObservable"
+        (imageCapture)="handleImage($event)">
+  </webcam>
+  
+    
+    <h3>Register a new profile</h3>
+    <div class="row">
+
+      <div class="col-3"  >
+        <div ng-init="myVar = 'pic_angular.jpg'">
+
+        </div>
+        <button class="btn rounded-0" (click)="triggerSnapshot(); ">
+       <img id="img" src="assets/img/camera.png"
+               style="width:175px;height:175px "
+              class="card-img-top img-fluid rounded-circle" alt="..."> 
+            
+            </button>
+       
+      </div>
+      <div class="col-9">
+        <div class="row">
+        <div class="mb-1 col-12">
+          <label for="exampleFormControlInput1" class="form-label">Name</label>
+          <input class="form-control" type="number" value="" aria-label="...">
+        </div>
+    
+        <div class="mb-1 col-6">
+          <label for="exampleFormControlInput1" class="form-label">Age</label>
+          <input class="form-control" type="number" value="" aria-label="...">
+        </div>
+    
+        <div class="align-self-end ml-auto col-6 mb-1">
+          <label for="exampleFormControlInput1" class="form-label">Gender</label>
+          <select id="level" class="form-select">
+            <option selected>Gender</option>
+            <option value="L1">Male</option>
+            <option value="L1">Female</option>
+            <option value="L1">Other</option>
+          </select>  
+        </div>
+    
+        <div class="align-self-end ml-auto ">
+          <button class="bg-primary text-light float-end mx-2 btn-lg align-self-end ml-auto" data-nav="tab.profiles">Submit</button>
+          <button class="bg-primary text-light float-end mx-2 btn-lg" data-nav="tab.profiles">Cancel</button>
+          
+        </div>
+        
+        
+        
+        </div>
+      </div>
+    
+    </div>
+    
+    
+    </div>
+    
+    </main>
+   
+    
+    <div class="snapshot" *ngIf="webcamImage"> 
+  
+    <img [src]="webcamImage.imageAsDataUrl"> 
+    <!-- <router-outlet></router-outlet> -->
+  	
