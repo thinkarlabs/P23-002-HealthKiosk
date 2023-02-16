@@ -16,7 +16,7 @@ app.database = app.mongodb_client[config["DB_NAME"]]
 #app.database1 = app.mongodb_client['kioskprofile'] 
 app.account_sid = config['YOUR_ACCOUNT_SID']
 app.auth_token = config['TWILIO_AUTH_TOKEN']
-app.verify_sid = config['YOUR_VERIFY_SID']
+#app.verify_sid = config['YOUR_VERIFY_SID']
 app.ACCESS_TOKEN_EXPIRES_IN = config['ACCESS_TOKEN_EXPIRES_IN']
 app.REFRESH_TOKEN_EXPIRES_IN = config['REFRESH_TOKEN_EXPIRES_IN']
 

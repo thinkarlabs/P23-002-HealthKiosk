@@ -6,3 +6,5 @@ uvicorn
 twilio==6.63.2
 fastapi-jwt-auth
 fastapi-jwt-auth[asymmetric]
+passlib[bcrypt]
+openai
