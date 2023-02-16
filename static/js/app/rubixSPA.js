@@ -69,6 +69,10 @@ function x_nav(_route){
 				contentType: "application/json",
 				success: function (response) {
 					localStorage.setItem('token', response.access_token);
+					//localStorage.setItem('profile_json', response.profile);
+					values = JSON.stringify(response.profile);
+					localStorage.setItem("sun",values);
+					
 					//var resp = JSON.parse(response);
 					//res.setHeader('Set-Cookie', [
 					//	`accessToken=${securedAccessToken}; HttpOnly; Max-Age=${60000 * 15};`,
@@ -103,6 +107,8 @@ function x_nav(_route){
 				dataType: "json",
 				contentType: "application/json",
 				success: function (response) {
+					values = JSON.stringify(response.profile);
+					localStorage.setItem("sun",values);
 					//localStorage.setItem('token', response.access_token);
 					//var resp = JSON.parse(response);
 					//res.setHeader('Set-Cookie', [
@@ -165,7 +171,14 @@ function x_load(_url){
 		if (params !== undefined) {api_url += '?' + params}
 		
 		x_log(api_url,1);
+		var json = JSON.parse(localStorage.getItem('sun'))//localStorage.getItem('profile_json');
+		debugger;
+		if (json){
+			json = { "header": "Applicants", "profiles": json, "empty": false}
+			x_render(routeKey, json)
+		}else{
 		$.getJSON(api_url).done(json => x_render(routeKey, json));
+		}
 	}
 	else{
 		x_render(routeKey);
