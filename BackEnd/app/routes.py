@@ -16,7 +16,7 @@ router = APIRouter()
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
 def create_user(request: Request, payload: Phone = Body(...)):
-    otp = 12 #random.randint(100000,999999)
+    otp = random.randint(100000,999999) #12
     print("Your OTP is - ",otp)
     c_code = "+91"
     verified_number = c_code + str(payload.number)
@@ -83,13 +83,16 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
     #import pdb;pdb.set_trace()
     if new_project.get('profile', None): #new_project['profile']:
         data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
+        profiles = new_project['profile']
     else:
         data = {}
+        profiles = []
+    """   
     path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
     with open(path, "w") as f:
-        f.write(json.dumps(data, indent=4))
+        f.write(json.dumps(data, indent=4))"""
     
-    return {'status': 'success', 'access_token': access_token}
+    return {'profile': profiles, 'access_token': access_token}
 
 
 @router.get('/me', response_model=UserResponse)
@@ -114,8 +117,8 @@ def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.requ
     return message
 
 
-@router.post("/profile", status_code=status.HTTP_200_OK, response_model=Otp)
-def add_profile(request: Request, profile: Profile, user_id: str = Depends(oauth2.require_user)):
+@router.post("/profile")
+def add_profile(request: Request,response: Response, profile: Profile, user_id: str = Depends(oauth2.require_user)):
     project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
     { '$push': { 
         'profile': {
@@ -129,14 +132,15 @@ def add_profile(request: Request, profile: Profile, user_id: str = Depends(oauth
 
     new_project = request.app.database["patient"].find_one({'number':int(user_id)})
     if new_project['profile']:
-        data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
+        data = new_project['profile']
     else:
-        data = {}
-    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
+        data = []
+    return {'profile': data}
+    """path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
     with open(path, "w") as f:
         f.write(json.dumps(data, indent=4))
     return {'condition': True}
-
+    """
 
 #from typing import List
 #@router.get("/profile", status_code=status.HTTP_200_OK, response_model=List[Profile])
