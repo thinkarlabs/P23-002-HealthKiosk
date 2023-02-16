@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {WebcamImage} from 'ngx-webcam';
 import {Subject, Observable} from 'rxjs';
-import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @Component({
   selector: 'pm-user-registration',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-phone-registration',
@@ -7,6 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./phone-registration.component.css']
 })
 export class PhoneRegistrationComponent {
+  constructor(private router: Router) { }
+  ngOnInit(): void {
+  }
+
+  onSubmit() {
+    this.router.navigate(['otp']);
+   
+  }
   
 
 }

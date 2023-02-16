@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-user-profiles',
@@ -6,6 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-profiles.component.css']
 })
 export class UserProfilesComponent {
+ 
+  constructor(private router: Router) { }
+  ngOnInit(): void {
+  }
+
+  onClickingPlus() {
+    this.router.navigate(['registration']);
+   
+  }
 
 
 }

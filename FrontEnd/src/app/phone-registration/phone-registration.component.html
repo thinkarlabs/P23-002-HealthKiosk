@@ -1,41 +1,35 @@
-<!-- <pm-header></pm-header> -->
+
 <main class="container-full">
     <div id='x-main' class="container-fluid mt-5 bg-secondary text-light p-0">
         <div class="card login-card bg-secondary text-light" style="min-height:600px;">
             <div id="logincard">
 
-                <div class="card-body mx-auto" ng-app="myApp" ng-controller="formCtrl" style="display:block;width:400px;margin-top:100px;">
-                   
-                  <h5 class="card-title text-center mb-2">Enter your Phone Number</h5>
-                  <form  >
-                    <input class="form-control mt-4" type="string" ng-model="phone_number">
-                  </form>
-                
-                
-                <script>
-                var app = angular.module('myApp', []);
-                app.controller('formCtrl', function($scope) {
-                    $scope.firstname = "John";
-                });
-                </script>
-                  
-                  <!-- <input type="text" class="form-control mt-4"></input> -->
-                  <button type="button" class="btn btn-primary text-center w-50 mt-4 mx-auto btn-lg" style="display: block;" data-nav="tab.otp">Done</button>
-                </div>		
+                <div class="card-body mx-auto" ng-app="myApp" ng-controller="formCtrl"
+                    style="display:block;width:400px;margin-top:100px;">
+
+                    <h5 class="card-title text-center mb-2">Enter your Phone Number</h5>
+                    <form>
+                        <input class="form-control mt-4" type="string" ng-model="phone_number">
+                    </form>
+
+
+
+                    <button type="button" (click)="onSubmit()"
+                        class="btn btn-primary text-center w-50 mt-4 mx-auto btn-lg" style="display: block;"
+                        data-nav="tab.otp">Done</button>
+                </div>
             </div>
-    
+
             <div class="card-body mx-auto" style="display:block;width:200px;position:absolute;bottom:60px;right:100px">
-              <h5 class="card-title text-center mb-2">Supported by</h5>
-              <a href="https://www.emids.com/" target="_blank">
-                <img src="assets/img/emids-logo.png" style="width:160px"  class="me-3"></a>
-               
+                <h5 class="card-title text-center mb-2">Supported by</h5>
+                <a href="https://www.emids.com/" target="_blank">
+                    <img src="assets/img/emids-logo.png" style="width:160px" class="me-3"></a>
+
 
             </div>
-            
-        </div>  
+
+        </div>
     </div>
- 
-    
-    </main>
-    <!-- <pm-footer></pm-footer> -->
-    <!-- <router-outlet></router-outlet> -->
+
+
+</main>

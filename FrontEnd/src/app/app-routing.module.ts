@@ -6,10 +6,15 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 // import { UserProfilesComponent } from './user-profiles/user-profiles.component';
 import { KioskComponent } from './kiosk/kiosk.component';
 import { PhoneRegistrationComponent } from './phone-registration/phone-registration.component';
+import { PhoneOtpComponent } from './phone-otp/phone-otp.component';
+import { UserProfilesComponent } from './user-profiles/user-profiles.component';
+
 const routes: Routes = [
-  { path: 'registarion', component : UserRegistrationComponent},
+  { path: 'registration', component : UserRegistrationComponent},
   { path:'phone',component :  PhoneRegistrationComponent},
-  { path:'', component:KioskComponent}
+  { path:'', component:KioskComponent},
+  { path:'otp',component:PhoneOtpComponent},
+  { path:'userprofile', component:UserProfilesComponent}
   
 
 ];
