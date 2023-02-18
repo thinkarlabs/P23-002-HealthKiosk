@@ -1,17 +1,17 @@
 <div id='x-main' class="container-fluid mt-5 bg-secondary text-light p-0">
     <div class="card login-card bg-secondary text-light" style="min-height:600px;">
         <div id="logincard">
-<div class="card-body mx-auto" style="display:block;width:400px;margin-top:100px;" ng-app="myApp" ng-controller="formCtrl" style="display:block;width:200px;margin-top:100px;">
+<div class="card-body mx-auto" style="display:block;width:250px;margin-top:100px;" ng-app="myApp" ng-controller="formCtrl" >
      <h5 class="card-title text-center mb-2">Enter OTP</h5>
-     <form>
+     <form >
         <input type="number" class="form-control mt-2" maxlength="6" required>
         <!-- <input class="form-control mt-auto" style="width: 300px; align-content: center;" type="number" ng-model="phone_otp"> -->
      </form>
      
-         <div class ="text-center">
-         <button type="button" class="btn btn-primary  mr-3 mt-4">Back</button>
+         <div class ="align-self-center btn-group">
+         <button type="button" class="btn btn-primary float-center  mr-3 mt-4"style="width: 100px;">Back</button>
         
-        <button type="button" class="btn btn-primary mr-3 mt-4"(click)="onEnter()"
+        <button type="button" class="btn btn-primary float-center mr-3 mt-4" style="width:100px" (click)="onEnter()"
         
         data-nav="tab.otp">Done</button>		  
     </div>
