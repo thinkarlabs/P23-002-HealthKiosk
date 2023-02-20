@@ -7,7 +7,7 @@ from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatTex
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
-from  app.chat import get_response
+# from  app.chat import get_response
 router = APIRouter()
 #523144
 

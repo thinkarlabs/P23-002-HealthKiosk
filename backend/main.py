@@ -11,17 +11,17 @@ config = dotenv_values(".env")
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-app.mongodb_client = MongoClient(config["CONNECTION_STRING"])
-app.database = app.mongodb_client[config["DB_NAME"]]
+# app.mongodb_client = MongoClient(config["CONNECTION_STRING"])
+# app.database = app.mongodb_client[config["DB_NAME"]]
 #app.database1 = app.mongodb_client['kioskprofile'] 
-app.account_sid = config['YOUR_ACCOUNT_SID']
-app.auth_token = config['TWILIO_AUTH_TOKEN']
-app.verify_sid = config['YOUR_VERIFY_SID']
-app.ACCESS_TOKEN_EXPIRES_IN = config['ACCESS_TOKEN_EXPIRES_IN']
-app.REFRESH_TOKEN_EXPIRES_IN = config['REFRESH_TOKEN_EXPIRES_IN']
+# app.account_sid = config['YOUR_ACCOUNT_SID']
+# app.auth_token = config['TWILIO_AUTH_TOKEN']
+# app.verify_sid = config['YOUR_VERIFY_SID']
+# app.ACCESS_TOKEN_EXPIRES_IN = config['ACCESS_TOKEN_EXPIRES_IN']
+# app.REFRESH_TOKEN_EXPIRES_IN = config['REFRESH_TOKEN_EXPIRES_IN']
 
-app.verified_number = config['SM_TO']
-app.client = Client(app.account_sid, app.auth_token)
+# app.verified_number = config['SM_TO']
+# app.client = Client(app.account_sid, app.auth_token)
 
 from fastapi.middleware.cors import CORSMiddleware
 #from nltk import edit_distance

@@ -1,3 +1,15 @@
+<div id='x-header'>
+	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
+	  <div class="container-fluid">
+		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
+		<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- <a class ="float-end mx-2 btn-lg align-self-end ml-auto text-white"  routerLink="/phone">Kiosk App</a> -->
+
+		</div>
+		
+	  </div>
+	</nav></div>
 <main class="container-full">
   <div id='x-main' class="container-md mt-5 p-3">
     <webcam [height]="0" [width]="0" [trigger]="triggerObservable" (imageCapture)="handleImage($event)">
@@ -16,34 +28,40 @@
         </button>
 
       </div>
+      <form #userRegistration="ngForm" (ngSubmit)="postUserRegistration(userRegistration.value)">
       <div class="col-9">
         <div class="row">
 
           <div class="mb-1 col-12">
-            <label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input class="form-control" type="number" value="" aria-label="...">
+            <label for="exampleFormControlInput1"  class="form-label">Name</label>
+            <input  ngModel name="Name" class="form-control" type="string"  aria-label="..."  ngModel>
           </div>
 
           <div class="mb-1 col-6">
             <label for="exampleFormControlInput1" class="form-label">Age</label>
-            <input class="form-control" type="number" value="" aria-label="...">
+            <input ngModel name="Age"  class="form-control" type="number"  aria-label="...">
           </div>
 
-          <div class="mb-1 col-6">
+           <div class="mb-1 col-6">
             
-            <label for="exampleFormControlInput1" class="form-label ">Gender</label>
-            <div>
-              <select id="level" class="form-select">
+            <label for="exampleFormControlInput1"  class="form-label ">Gender</label>
+            <!-- <div>
+              
+              <select id="level"  ngModel gender="Gender" class="form-select">
                 <option selected>Gender</option>
                 <option value="L1">Male</option>
                 <option value="L1">Female</option>
                 <option value="L1">Other</option>
               </select>
-            </div>
+            </div> -->
+            <select class="form-select" ngModel name="selected">
+              <option *ngFor="let n of Gender" >{{n}}</option>
+            </select>
+            {{selected}}
            
         
-          </div>
-
+          </div> 
+ 
 
 
 
@@ -55,8 +73,8 @@
 
           <div class="align-self-end ml-auto mt-4 ">
             <button class="bg-primary text-light float-end mx-2 btn-lg align-self-end ml-auto"
-              data-nav="tab.profiles">Submit</button>
-            <button class="bg-primary text-light float-end mx-2 btn-lg align-self-end ml-auto" data-nav="tab.profiles">Cancel</button>
+             >Submit</button>
+            <button class="bg-primary text-light float-end mx-2 btn-lg align-self-end ml-auto" data-nav="tab.profiles" (click)="onCancel()">Cancel</button>
 
           </div>
 
@@ -64,7 +82,7 @@
 
         </div>
       </div>
-
+    </form>
     </div>
 
 
@@ -76,4 +94,4 @@
 <div class="snapshot" *ngIf="webcamImage">
 
   <img [src]="webcamImage.imageAsDataUrl">
-  <router-outlet></router-outlet>
+  

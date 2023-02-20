@@ -14,6 +14,11 @@ export class PhoneOtpComponent {
     this.router.navigate(['userprofile']);
    
   }
+   // constructor(private router: Router){}
+   onBack(){
+    this.router.navigate(['phone']);
+
+  }
 
 }
 
