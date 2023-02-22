@@ -10,7 +10,7 @@
 		
 	  </div>
 	</nav></div>
-<!-- <router-outlet></router-outlet> -->
+
 <main class="container-full">
   
     <div id='x-main' class="container-fluid mt-5 p-3" style="min-height:550px">
@@ -33,7 +33,7 @@
                   <label for="passwordInput">Password</label>
                   <input type="password" class="form-control" id="passwordInput" placeholder="Enter password">
                 </div>
-                <button type="submit" class="mt-4 btn btn-primary" data-nav="admin.episodes">Doctor</button>
+                <button type="submit" class="mt-4 btn btn-primary" (click)="onDoctor()">Doctor</button>
               </form>
             </div>
           </div>  

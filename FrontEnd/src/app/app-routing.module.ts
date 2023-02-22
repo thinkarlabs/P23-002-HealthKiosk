@@ -1,18 +1,17 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
-// import { UserProfilesComponent } from './user-profiles/user-profiles.component';
 import { KioskComponent } from './kiosk/kiosk.component';
-import { PhoneRegistrationComponent } from './phone-registration/phone-registration.component';
-import { PhoneOtpComponent } from './phone-otp/phone-otp.component';
-import { UserProfilesComponent } from './user-profiles/user-profiles.component';
-import { EpisodeComponent } from './episode/episode.component';
-import { UserEpisodeComponent } from './user-episode/user-episode.component';
-import { EpisodeWaitComponent } from './episode-wait/episode-wait.component';
-import { EpisodeConfirmComponent } from './episode-confirm/episode-confirm.component';
-import { EpisodeCallComponent } from './episode-call/episode-call.component';
+import { PhoneRegistrationComponent } from './tab/phone-registration/phone-registration.component';
+import { UserProfilesComponent } from './tab/user-profiles/user-profiles.component';
+
+import { PhoneOtpComponent } from './tab/phone-otp/phone-otp.component';
+import { UserEpisodeComponent } from './tab/user-episode/user-episode.component';
+import { UserRegistrationComponent } from './tab/user-registration/user-registration.component';
+import { EpisodeCallComponent } from './tab/episode-call/episode-call.component';
+import { EpisodeConfirmComponent } from './tab/episode-confirm/episode-confirm.component';
+import { EpisodeWaitComponent } from './tab/episode-wait/episode-wait.component';
+import { EpisodeComponent } from './tab/episode/episode.component';
+import { PatientListComponent } from './patient-list/patient-list.component';
 
 const routes: Routes = [
   { path: 'registration', component : UserRegistrationComponent},
@@ -24,7 +23,8 @@ const routes: Routes = [
   { path:'user_episode',component:UserEpisodeComponent},
   { path:'episode_wait', component:EpisodeWaitComponent},
   { path: 'episode_confirm',component:EpisodeConfirmComponent},
-  { path: 'episode_call',component:EpisodeCallComponent}
+  { path: 'episode_call',component:EpisodeCallComponent},
+  { path: 'patient',component:PatientListComponent}
 
 ];
 

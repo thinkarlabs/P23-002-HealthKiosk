@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import ProfilesJson from '../s.json';
+
+import ProfilesJson from '../user-profiles/s.json';
 interface PROFILES {
   profile_name: String;
   profile_pic: String;

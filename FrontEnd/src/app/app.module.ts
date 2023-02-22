@@ -3,18 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { WebcamModule } from 'ngx-webcam';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
-import { UserProfilesComponent } from './user-profiles/user-profiles.component';
+import { UserProfilesComponent } from './tab/user-profiles/user-profiles.component';
 import { KioskComponent } from './kiosk/kiosk.component';
-import { FooterComponent } from './footer/footer.component';
-import { PhoneOtpComponent } from './phone-otp/phone-otp.component';
+
+import { PhoneOtpComponent } from './tab/phone-otp/phone-otp.component';
 import {HttpClientModule} from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
-import { EpisodeComponent } from './episode/episode.component';
-import { UserEpisodeComponent } from './user-episode/user-episode.component';
-import { EpisodeWaitComponent } from './episode-wait/episode-wait.component';
-import { EpisodeCallComponent } from './episode-call/episode-call.component';
-import { EpisodeConfirmComponent } from './episode-confirm/episode-confirm.component';
+import { UserRegistrationComponent } from './tab/user-registration/user-registration.component';
+import { EpisodeComponent } from './tab/episode/episode.component';
+import { EpisodeWaitComponent } from './tab/episode-wait/episode-wait.component';
+import { EpisodeCallComponent } from './tab/episode-call/episode-call.component';
+import { EpisodeConfirmComponent } from './tab/episode-confirm/episode-confirm.component';
+import { UserEpisodeComponent } from './tab/user-episode/user-episode.component';
+import { FooterComponent } from './common/footer/footer.component';
+import { PatientListComponent } from './patient-list/patient-list.component';
 
 
 
@@ -31,6 +33,7 @@ import { EpisodeConfirmComponent } from './episode-confirm/episode-confirm.compo
     EpisodeWaitComponent,
     EpisodeCallComponent,
     EpisodeConfirmComponent,
+    PatientListComponent,
    
     
   ],
