@@ -1,0 +1,73 @@
+<div>
+	
+<h1>hii</h1>
+
+<h3 class="float-start ps-2">Patient Queue</h3>
+<table style="width: 100%;">
+	
+	<thead>
+      <tr>
+		<th scope="col">Photo</th>
+		<th scope="col">Name</th>
+		<th scope="col">Profile</th>
+		<th scope="col">Date/Time</th>
+		<th scope="col">+</th>
+      </tr>
+  </thead>
+  <tbody>
+	
+      <tr>
+        <td><img src="assets/img/kamala.jpg" alt="not found" height="100px"  width="100px" style="border-radius: 45%;"> </td>
+        <td><h6 for="exampleFormControlInput1">Rathnamma K T</h6></td>
+        <td>	 		  <h6 for="exampleFormControlInput1">Female, 82 yrs</h6> 
+  
+		</td><h6 for="exampleFormControlInput1">12/Jan/2023,
+			 4:35 PM</h6>
+           <td><h6 for="exampleFormControlInput1">Notes : Patient had a stomach ache and was not able to consume even water. No fever. Patient is diabetic.</h6></td>
+			
+		
+      </tr>
+      
+      <tr>
+		<td><img src="assets/img/timmappa.jpg" alt="not found" height="100px" width="100px" style="border-radius: 45%;"> </td>
+
+        <td><h6 for="exampleFormControlInput1">Thimmappa </h6></td>
+        <td>	 		  <h6 for="exampleFormControlInput1">male, 32 yrs</h6> 
+  
+		</td><h6 for="exampleFormControlInput1">1/June/2000,
+			 4:35 PM</h6>
+           <td><h6 for="exampleFormControlInput1">Notes : Patient had a stomach ache and was not able to consume even water. No fever. Patient is diabetic.</h6></td>
+			
+		
+
+</tr>
+    
+<tr>
+	<td><img src="assets/img/baby.jpg" alt="not found" height="100px" width="100px" style="border-radius: 45%;"> </td>
+
+	<td><h6 for="exampleFormControlInput1">Meenakshi</h6></td>
+	<td>	 		  <h6 for="exampleFormControlInput1">Female, 7 yrs</h6> 
+
+	</td><h6 for="exampleFormControlInput1">19/Jan/2023,
+		 4:35 PM</h6>
+	   <td><h6 for="exampleFormControlInput1">Notes : Patient had a stomach ache and was not able to consume even water. No fever. Patient is diabetic.</h6></td>
+		
+	
+</tr>
+
+
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+
+
+  <caption></caption>
+</table>
+
+</div>
+
