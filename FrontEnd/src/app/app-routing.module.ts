@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { KioskComponent } from './kiosk/kiosk.component';
-import { PhoneRegistrationComponent } from './tab/phone-registration/phone-registration.component';
+// import { PhoneRegistrationComponent } from './tab/phone-registration/phone-registration.component';
 import { UserProfilesComponent } from './tab/user-profiles/user-profiles.component';
 
 import { PhoneOtpComponent } from './tab/phone-otp/phone-otp.component';
@@ -12,10 +12,12 @@ import { EpisodeConfirmComponent } from './tab/episode-confirm/episode-confirm.c
 import { EpisodeWaitComponent } from './tab/episode-wait/episode-wait.component';
 import { EpisodeComponent } from './tab/episode/episode.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
+import { PhoneNumberComponent } from './phone-number/phone-number.component';
 
 const routes: Routes = [
   { path: 'registration', component : UserRegistrationComponent},
-  { path:'phone',component :  PhoneRegistrationComponent},
+  // { path:'phone',component :  PhoneRegistrationComponent},
+  { path :'phone',component:PhoneNumberComponent},
   { path:'', component:KioskComponent},
   { path:'otp',component:PhoneOtpComponent},
   { path:'userprofile', component:UserProfilesComponent},

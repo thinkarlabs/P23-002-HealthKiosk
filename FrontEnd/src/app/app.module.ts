@@ -5,10 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserProfilesComponent } from './tab/user-profiles/user-profiles.component';
 import { KioskComponent } from './kiosk/kiosk.component';
-
+// import { NgForm } from '@angular/forms';
 import { PhoneOtpComponent } from './tab/phone-otp/phone-otp.component';
 import {HttpClientModule} from '@angular/common/http'; 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { UserRegistrationComponent } from './tab/user-registration/user-registration.component';
 import { EpisodeComponent } from './tab/episode/episode.component';
 import { EpisodeWaitComponent } from './tab/episode-wait/episode-wait.component';
@@ -17,6 +17,7 @@ import { EpisodeConfirmComponent } from './tab/episode-confirm/episode-confirm.c
 import { UserEpisodeComponent } from './tab/user-episode/user-episode.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
+import { PhoneNumberComponent } from './phone-number/phone-number.component';
 
 
 
@@ -34,6 +35,9 @@ import { PatientListComponent } from './patient-list/patient-list.component';
     EpisodeCallComponent,
     EpisodeConfirmComponent,
     PatientListComponent,
+    PhoneNumberComponent,
+    
+    
    
     
   ],
@@ -42,7 +46,10 @@ import { PatientListComponent } from './patient-list/patient-list.component';
     AppRoutingModule,
     HttpClientModule,
     WebcamModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    
+  
   ],
   providers: [],
   bootstrap: [AppComponent],

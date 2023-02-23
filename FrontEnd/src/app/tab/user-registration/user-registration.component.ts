@@ -36,15 +36,21 @@ constructor(private router: Router,private userData:UserRegistrationService){
 public get triggerObservable(): Observable<void> {
 return this.trigger.asObservable();
 }
+
 postUserRegistration(data:any){
   console.warn(data);
-  this.userData.saveuser(data).subscribe((result)=>{
-    console.warn(result)
-  })
-
+  
 }
+
+
 onCancel(){ this.router.navigate(['userprofile']);
 }
+onSubmit(){
+    console.log('submit')
+  //   this.userData.saveuser().subscribe((result)=>{
+  //   console.warn(result)
+  // })
 
+}
 
 }

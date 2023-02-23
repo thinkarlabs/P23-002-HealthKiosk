@@ -13,20 +13,23 @@
 <div id='x-main' class="container-fluid mt-5 bg-secondary text-light p-0">
     <div class="card login-card bg-secondary text-light" style="min-height:600px;">
         <div id="logincard">
+         
 <div class="card-body mx-auto" style="display:block;width:250px;margin-top:100px;" ng-app="myApp" ng-controller="formCtrl" >
      <h5 class="card-title text-center mb-2">Enter OTP</h5>
-     <form >
-        <input type="number" class="form-control mt-2" maxlength="6" required>
+     <form #formOtp ="ngForm" (ngSubmit)="postOtp(formOtp.value)">
+        <input ngModel otp="otp" type="number" class="form-control mt-2" maxlength="6" required>
         <!-- <input class="form-control mt-auto" style="width: 300px; align-content: center;" type="number" ng-model="phone_otp"> -->
-     </form>
+    
      
          <div class ="align-self-center btn-group">
          <button type="button" class="btn btn-primary float-center  mr-3 mt-4" (click)="onBack()" style="width: 100px;">Back</button>
         
         <button type="button" class="btn btn-primary float-center mr-3 mt-4" style="width:100px" (click)="onEnter()"
         
-        data-nav="tab.otp">Done</button>		  
+        data-nav="tab.otp">Done</button>		
+      
     </div>
+  </form>  
      <div class="card-body mx-auto" style="display:block;width:200px;position:absolute;bottom:60px;right:100px">
         <h5 class="card-title text-center mb-2">Supported by</h5>
         <a href="https://www.emids.com/" target="_blank">

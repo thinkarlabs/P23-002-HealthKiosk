@@ -7,7 +7,7 @@ export class UserRegistrationService {
   users() {
     throw new Error('Method not implemented.');
   }
-url='http://localhost:8000/register';
+url='http://127.0.0.1:8000/profile';
   constructor(private http:HttpClient) { 
     
   }
@@ -15,4 +15,5 @@ url='http://localhost:8000/register';
     return this.http.post(this.url,data)
 
   }
+
 }
