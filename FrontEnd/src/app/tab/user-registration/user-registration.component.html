@@ -19,23 +19,15 @@
     <h3>Register a new profile</h3>
 
     <div class="row">
-
-
-
-      <div class="col-3 mb-1 ">
-
-
         <img [attr.src]="showAngularImage ? 'assets/img/camera.png' : webcamImage.imageAsDataUrl"
           style="width:175px;height:175px " class="card-img-top img-fluid rounded-circle"
           (click)="triggerSnapshot($event); ">
-
-
-      </div>
-      <div class="col-9">
+        <!-- <p>{{webcamImage.imageAsDataUrl}}</p> -->   
+     
         <form #userRegistration="ngForm" (ngSubmit)="postUserRegistration(userRegistration.value)">
           <div class="row">
 
-            <div class="mb-1 col-6">
+            <div class="mb-1 col-12">
 
 
               <label for="exampleFormControlInput1" class="form-label">Name</label>
@@ -43,12 +35,18 @@
 
 
             </div>
-   
 
             <div class="mb-1 col-6">
               <label for="exampleFormControlInput1" class="form-label">Age</label>
               <input ngModel name="Age" class="form-control" type="number" aria-label="...">
             </div>
+            <div class="image-upload">
+              <input hidden type="URL" name="myURL" [(ngModel)]="myURL" placeholder="insert image URL here"
+                (change)="onURLinserted() ">
+
+
+            </div>
+
             <div class="mb-1 col-6">
               <label for="exampleFormControlInput1" class="form-label ">Gender</label>
               <select class="form-select" ngModel name="selected">
@@ -57,8 +55,8 @@
 
 
             </div>
-         
-           
+
+
 
             <div class="align-self-end ml-auto mt-4 col-6 ">
               <button class="bg-primary text-light float-end mx-2 btn-lg align-self-end ml-auto"
@@ -68,7 +66,7 @@
 
             </div>
           </div>
-      </form>
-      </div> 
-       
-     
+        </form>
+      </div>
+      </div>
+      
