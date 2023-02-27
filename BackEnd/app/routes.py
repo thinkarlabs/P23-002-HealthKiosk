@@ -119,6 +119,7 @@ def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.requ
 
 @router.post("/profile")
 def add_profile(request: Request,response: Response, profile: Profile, user_id: str = Depends(oauth2.require_user)):
+    #import pdb;pdb.set_trace()
     project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
     { '$push': { 
         'profile': {
@@ -146,11 +147,52 @@ def add_profile(request: Request,response: Response, profile: Profile, user_id: 
 #@router.get("/profile", status_code=status.HTTP_200_OK, response_model=List[Profile])
 @router.get("/profile")
 def get_profiles(request: Request,response: Response,  user_id: str = Depends(oauth2.require_user)):
-    new_project = request.app.database["patient"].find_one({'number' : int(user_id)})
-    import os
-    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
-    with open(path, "w") as f:
-        f.write("Hello World!!!")
-    return new_project['profile']
+    new_project = request.app.database["patient"].find_one({'number':int(user_id)})
+    if new_project.get('profile', None):
+        data = new_project['profile']
+    else:
+        data = []
+    #import pdb;pdb.set_trace()
+    return {'profile': data}
 
- 
+
+
+@router.get("/sun")
+def get_profiles(request: Request,response: Response):
+    
+    return "Hello World!!!"
+
+
+
+@router.post('/register1')
+def create_user(request: Request, response: Response, payload: Phone = Body(...)):
+    otp = random.randint(100000,999999) #12
+    print("Your OTP is - ",otp)
+    c_code = "+91"
+    verified_number = c_code + str(payload.number)
+    """try:
+        message = request.app.client.messages.create(
+            body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
+            from_=request.app.twilio_number,
+            to=verified_number
+        )
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
+    new_project = request.app.database["patient"].find_one({'number': payload.number}) #dict
+    if new_project:
+        new_project['updated_at'] = datetime.utcnow()
+        new_project['h_pass'] =  utils.hash_password(otp)
+        new_project['otp'] = otp+64
+        new_project = request.app.database["patient"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
+        
+    else:
+        created_at= datetime.utcnow()
+        user_dict = {
+            'number' : payload.number,
+            'created_at' : created_at,
+            'updated_at': created_at,
+            'h_pass' : utils.hash_password(otp),
+            'otp' : otp+64
+        }
+        new_project = request.app.database["patient"].insert_one(user_dict) #pymongo object
+    return {'phone': verified_number, 'otp': otp }
