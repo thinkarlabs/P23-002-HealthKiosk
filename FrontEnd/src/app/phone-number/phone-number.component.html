@@ -1,15 +1,28 @@
-<div id='x-header'>
-	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
+<!-- <div id='x-header'>
+	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark py-0">
 	  <div class="container-fluid">
 		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
 		<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
             <!-- <a class ="float-end mx-2 btn-lg align-self-end ml-auto text-white"  routerLink="/phone">Kiosk App</a> -->
 
-		</div>
+		<!-- </div>
 		
 	  </div>
-	</nav></div>
+
+	</nav></div> -->
+    <div id='x-header'>
+        <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
+          <div class="container-fluid">
+            <img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
+            <p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <!-- <a class ="float-end mx-2 btn-lg align-self-end ml-auto text-white"  routerLink="/phone">Kiosk App</a> -->
+    
+            </div>
+            
+          </div>
+        </nav></div>
 <main class="container-full">
     <div id='x-main' class="container-fluid mt-5 bg-secondary text-light p-0">
         <div class="card login-card bg-secondary text-light" style="min-height:600px;">
@@ -19,15 +32,11 @@
                     style="display:block;width:400px;margin-top:100px;">
 
                     <h5 class="card-title text-center mb-2">Enter your Phone Number</h5>
-                  <form #Registration="ngForm" (ngSubmit)="phoneRegistration(Registration.value)">
+                  <form #Registration="ngForm" (ngSubmit)="onClickSubmit(Registration.value)">
                        
                         
-                        <input ngModel name="phone" class="form-control mt-4" type="string" >
-                    
-
-
-
-                    <button type="button" (click)="onSubmit()"
+                        <input ngModel name="number" class="form-control mt-4" type="string" >
+                    <button type="button" (click)="onClickSubmit(Registration.value)"
                         class="btn btn-primary text-center w-50 mt-4 mx-auto btn-lg" style="display: block;"
                         data-nav="tab.otp">Done</button>
                     </form>

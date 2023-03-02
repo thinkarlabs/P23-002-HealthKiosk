@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class UserRegistrationComponent {
   users:any;
   base64Output : string;
+  public text: string = 'Click Here To Take Image';
 
   showAngularImage =true;
   Gender=['MALE','FEMALE','OTHERS'];
@@ -24,6 +25,12 @@ export class UserRegistrationComponent {
 triggerSnapshot(webcamImage: WebcamImage):void{
 this.trigger.next();
 this.showAngularImage =! webcamImage;
+if(this.text === 'Click Here To Take Image') { 
+  this.text = 'For retake click Camera Again'
+  
+
+
+}
 // console.info('Saved webcam image', webcamImage);
 // console.log(this.webcamImage.imageAsDataUrl);
     this.myURL=this.webcamImage.imageAsDataUrl;
@@ -41,19 +48,27 @@ this.webcamImage = webcamImage;
 
 
 }
+ 
 constructor(private router: Router,private userData:UserRegistrationService){
   // this.userData.users().suscribe((data)=>{
   //   this.users=data;
   // })
+  
   
 }
 public get triggerObservable(): Observable<void> {
 return this.trigger.asObservable();
 }
 
+
+
 postUserRegistration(data:any){
   console.warn(data);
-  
+  this.userData.saveuser(data).subscribe((result)=>{
+    console.warn(result)
+  })
+  //location.reload()
+  this.router.navigate(['userprofile']);
 }
 
 
@@ -61,9 +76,8 @@ onCancel(){ this.router.navigate(['userprofile']);
 }
 onSubmit(){
     console.log('submit')
-    this.userData.saveuser(this.userData).subscribe((result)=>{
-    console.warn(result)
-  })
+    //location.reload();
+   
 
 }
 
