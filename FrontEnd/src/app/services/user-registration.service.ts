@@ -68,4 +68,10 @@ export class UserRegistrationService {
 
   }
 
+  openaiResult(data:any){
+    var apiUrl = "http://127.0.0.1:3000/predict";
+    return this.http.post(apiUrl, {chat: data})
+  }
+
+
 }
