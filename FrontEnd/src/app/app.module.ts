@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserProfilesComponent } from './tab/user-profiles/user-profiles.component';
 import { KioskComponent } from './kiosk/kiosk.component';
-// import { NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { PhoneOtpComponent } from './tab/phone-otp/phone-otp.component';
 import {HttpClientModule} from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
@@ -18,7 +18,7 @@ import { UserEpisodeComponent } from './tab/user-episode/user-episode.component'
 import { FooterComponent } from './common/footer/footer.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
-import { MobileComponent } from './mobile/mobile.component';
+// import { MobileComponent } from './mobile/mobile.component';
 
 
 
@@ -37,7 +37,7 @@ import { MobileComponent } from './mobile/mobile.component';
     EpisodeConfirmComponent,
     PatientListComponent,
     PhoneNumberComponent,
-    MobileComponent,
+   
     
     
    

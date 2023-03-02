@@ -1,12 +1,16 @@
 <div id='x-header'>
-	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
-	  <div class="container-fluid">
-		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
-		<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
-		
-		
-	  </div>
-	</nav></div>
+  <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-2">
+    <div class="container-fluid">
+      <img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px" />
+      <p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+
+
+      </div>
+
+    </div>
+  </nav>
+</div>
 <main class="container-full">
     <div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
     
@@ -29,11 +33,13 @@
             </div>
             
             <div class="row mt-4">
-                <div class="btn-group" role="group" aria-label="Basic example">
-                  <button type="button" class="btn btn-primary"><i class="bi bi-mic-mute"></i></button>
+              <div class="btn-group col-12" role="group" aria-label="Basic example">
+                <!-- <button type="button" class="btn btn-primary"><span class="bi bi-mic-mute-fill"></span></button> -->
+                  <button type="button" class="btn btn-primary"><i class="bi bi-mic-mute"></i></button> 
                   <button type="button" class="btn btn-primary"><i class="bi bi-volume-mute"></i></button>
                   <button type="button" class="btn btn-primary">Start/Finish</button>
-                </div>
+                
+              </div>
             </div>
     
             <div class="border border-dark border-3 mt-4" style="height:100px">
@@ -43,13 +49,14 @@
                   </blockquote>
                 </figure>
             </div>
-    
-          <button class="bg-primary text-light btn-lg mt-4" (click)="onSubmit()" style="width:220px" >Submit</button>
+    <div class="col-12 mt-4">
+          <button class="bg-primary text-light btn-lg " (click)="onSubmit()" style="width:220px" >Submit</button>
           
-          <button class="bg-primary text-light btn-lg mt-4" (click)="onClose()" style="width:220px" >Close</button>
-    
+          <button class="bg-primary text-light btn-lg " (click)="onClose()" style="width:220px" >Close</button>
+        </div>
     
         </div>
+     
     
         <div class="col-3 text-center">
             <div class="text-start">

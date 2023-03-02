@@ -108,9 +108,9 @@ def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = De
     response.set_cookie('logged_in', '', -1)
     return {'status': 'success'}
 
-
+#user_id: str = Depends(oauth2.require_user)
 @router.post("/predict", status_code=status.HTTP_200_OK, response_model=ChatText)
-def predict(request: Request, chat: ChatText, user_id: str = Depends(oauth2.require_user)):
+def predict(request: Request, chat: ChatText):
     #text = request.get_json().get("message")  # TODO: check if text is valid
     response = get_response(chat.chat)
     message = {"chat": response}
