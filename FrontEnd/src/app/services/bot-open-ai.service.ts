@@ -10,9 +10,9 @@ export class BotOpenAiService {
   recognition = new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
   public text = "";
-  tempWords;
-  queText;
-  resText;
+  tempWords = '';
+  queText ='';
+  resText='';
 
   constructor(public http: UserRegistrationService) {}
 
@@ -28,6 +28,10 @@ export class BotOpenAiService {
       this.tempWords = transcript;
       console.log(transcript);
     });
+    this.resText = "Hi How can I help you?"
+    
+    this.speak()
+    //this.wordConcat();
   }
 
   start() {
@@ -56,7 +60,7 @@ export class BotOpenAiService {
         console.warn("Return openai data", data);
         this.resText = data["chat"];
         this.speak();
-        this.recognition.start();
+       // this.recognition.start();
         //this.speak11()
         //this.router.navigate(['userprofile']);
       });
@@ -98,8 +102,10 @@ export class BotOpenAiService {
   }
 
   wordConcat() {
-    this.text = this.text + "Patient: " + this.tempWords + ". Bot" + this.resText;
-    this.tempWords = "";
+    this.text = this.text + "\nBot: " + this.resText + " \n Patient: " + this.tempWords ;
+    //this.tempWords = "";
+    //this.resText = "";
+    ///debugger
     //this.resText = ""
   }
 
