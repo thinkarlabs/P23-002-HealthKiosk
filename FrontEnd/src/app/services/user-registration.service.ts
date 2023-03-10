@@ -67,4 +67,10 @@ export class UserRegistrationService {
     var apiUrl = "http://127.0.0.1:3000/predict";
     return this.http.post(apiUrl, { chat: data });
   }
+
+  submitTranscript(data: any) {
+    var apiUrl = "http://127.0.0.1:3000/summary";
+    return this.http.post(apiUrl, { chat: data });
+  }
+
 }

@@ -131,4 +131,14 @@ export class BotOpenAiService {
     // Built-in speak method for the API
     synth.speak(utterance);
   }
+
+  submit(){
+    this.http.submitTranscript(this.text).subscribe((data) => {
+      console.warn("Return openai summary", data);
+      this.resText = data["chat"];
+   
+    });
+  }
+
+
 }

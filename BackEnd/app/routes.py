@@ -9,7 +9,7 @@ from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatTex
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
-from  app.chat import get_response
+from  app.chat import get_response, get_transcript_summary
 
 router = APIRouter()
 
@@ -116,6 +116,14 @@ def predict(request: Request, chat: ChatText):
     message = {"chat": response}
     return message
 
+#user_id: str = Depends(oauth2.require_user)
+@router.post("/summary", status_code=status.HTTP_200_OK, response_model=ChatText)
+def summary(request: Request, chat: ChatText):
+    #text = request.get_json().get("message")  # TODO: check if text is valid
+    response = get_transcript_summary(chat.chat)
+    message = {"chat": response}
+    return message
+
 
 @router.post("/profile")
 def add_profile(request: Request,response: Response, profile: Profile, user_id: str = Depends(oauth2.require_user)):
@@ -152,7 +160,9 @@ def get_profiles(request: Request,response: Response,  user_id: str = Depends(oa
         data = new_project['profile']
     else:
         data = []
-    #import pdb;pdb.set_trace()
+    #
+    # 
+    # import pdb;pdb.set_trace()
     return {'profile': data}
 
 

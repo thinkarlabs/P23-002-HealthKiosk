@@ -35,6 +35,7 @@ export class UserEpisodeComponent {
     this.service.stop();
   }
   onSubmit() {
+    this.service.submit();
     this.router.navigate(["episode_wait"]);
   }
   onClose() {
