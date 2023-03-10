@@ -1,7 +1,7 @@
 import os
 import openai
 
-openai.api_key = OPENAI_API_KEY = "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"#os.getenv("OPENAI_API_KEY")
+openai.api_key = OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 def get_response(msg):
