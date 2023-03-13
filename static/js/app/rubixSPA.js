@@ -49,7 +49,111 @@ function bind_events(){
 	});
 }
 
-function x_nav(_route){
+//function add_x_nav(_route){
+function x_nav(_route){	
+	//tab.profiles
+	if (_route=='tab.profiles'){
+		var otp =  $(".form-control.otp").val();
+		if (otp){
+			
+			var data = { 'number': otp };
+			var URL ="http://127.0.0.1:3000/login";
+
+
+			$.ajax({
+				url: URL,
+				type: "POST",
+				crossDomain: true,
+				data: JSON.stringify(data),
+				dataType: "json",
+				contentType: "application/json",
+				success: function (response) {
+					localStorage.setItem('token', response.access_token);
+					//localStorage.setItem('profile_json', response.profile);
+					values = JSON.stringify(response.profile);
+					localStorage.setItem("sun",values);
+					
+					//var resp = JSON.parse(response);
+					//res.setHeader('Set-Cookie', [
+					//	`accessToken=${securedAccessToken}; HttpOnly; Max-Age=${60000 * 15};`,
+					 // ])
+					new_x_nav(_route);
+					//alert(resp.status);
+				},
+				error: function (xhr, status) {
+					alert("error");
+					
+				}
+			});		
+
+
+		}
+		else {
+			var headers= {"Authorization": 'Bearer ' + localStorage.getItem('token')};
+			
+			var URL ="http://127.0.0.1:3000/profile";
+			var gender = $("#level").val();
+			var age = $(".form-control.p-age").val();
+			var Pname = $(".form-control.p-name").val();
+			var image = $("#custId").val();
+			var data = { 'profile_gender': gender, 'profile_age': age , 'profile_name': Pname, 'profile_pic': image }
+
+			$.ajax({
+				url: URL,
+				type: "POST",
+				crossDomain: true,
+				data: JSON.stringify(data),
+				headers: headers,
+				dataType: "json",
+				contentType: "application/json",
+				success: function (response) {
+					values = JSON.stringify(response.profile);
+					localStorage.setItem("sun",values);
+					//localStorage.setItem('token', response.access_token);
+					//var resp = JSON.parse(response);
+					//res.setHeader('Set-Cookie', [
+					//	`accessToken=${securedAccessToken}; HttpOnly; Max-Age=${60000 * 15};`,
+					 // ])
+					new_x_nav(_route);
+					//alert(resp.status);
+				},
+				error: function (xhr, status) {
+					alert("error");
+					
+				}
+			});		
+
+		}
+
+				
+	}
+	if (_route=='tab.otp'){
+		sun = $(".form-control").val();
+		$.ajax({
+			url: "http://127.0.0.1:3000/register",
+			type: "POST",
+			crossDomain: true,
+			data: JSON.stringify({ 'number': sun }),
+			dataType: "json",
+			contentType: "application/json",
+			success: function (response) {
+				//var resp = JSON.parse(response)
+				
+				new_x_nav(_route);
+				//alert(resp.status);
+			},
+			error: function (xhr, status) {
+				alert("error");
+				
+			}
+		});				
+	}else{
+		new_x_nav(_route);
+	}
+}
+
+function new_x_nav(_route){
+//function x_nav(_route){
 	//If a route key is valid, add to history and load the route.
 	routeKey = _route.split('?')[0]
 	if (x_routes[routeKey] === undefined){x_log('Invalid Route..' + routeKey,1); return;}
@@ -67,7 +171,14 @@ function x_load(_url){
 		if (params !== undefined) {api_url += '?' + params}
 		
 		x_log(api_url,1);
+		var json = JSON.parse(localStorage.getItem('sun'))//localStorage.getItem('profile_json');
+		debugger;
+		if (json){
+			json = { "header": "Applicants", "profiles": json, "empty": false}
+			x_render(routeKey, json)
+		}else{
 		$.getJSON(api_url).done(json => x_render(routeKey, json));
+		}
 	}
 	else{
 		x_render(routeKey);

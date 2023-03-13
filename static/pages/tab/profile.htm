@@ -1,35 +1,38 @@
 {% extends "static/pages/_common/base_tab.htm" %}
 
 {% block body %}
+
 <main class="container-full">
 <div id='x-main' class="container-md mt-5 p-3">
 
 <h3>Register a new profile</h3>
 <div class="row">
 	<div class="col-3">
-		<button class="btn rounded-0">
-			  <img src="https://w7.pngwing.com/pngs/639/614/png-transparent-computer-icons-camera-camera-photography-rectangle-camera-icon.png" style="width:175px;height:175px" class="card-img-top img-fluid rounded-circle" alt="...">
+		<button class="btn rounded-0 position-relative" >
+			<video onclick="snapshot(this);" width=200 height=200 id="video" controls autoplay></video>
+			<canvas  id="myCanvas" class="position-absolute top-0 start-0" width="200" height="200"></canvas>  
+			<p id="data64"></p>
 		</button>
 	</div>
 	<div class="col-9">
 		<div class="row">
 		<div class="mb-1 col-12">
 		  <label for="exampleFormControlInput1" class="form-label">Name</label>
-		  <input class="form-control" type="number" value="" aria-label="...">
+		  <input class="form-control p-name" type="text" value="" aria-label="...">
 		</div>
 
 		<div class="mb-1 col-6">
 		  <label for="exampleFormControlInput1" class="form-label">Age</label>
-		  <input class="form-control" type="number" value="" aria-label="...">
+		  <input class="form-control p-age" type="number" value="" aria-label="...">
 		</div>
 
 		<div class="mb-1 col-6">
 		  <label for="exampleFormControlInput1" class="form-label">Gender</label>
 			<select id="level" class="form-select">
 			  <option selected>Gender</option>
-			  <option value="L1">Male</option>
-			  <option value="L1">Female</option>
-			  <option value="L1">Other</option>
+			  <option value="Male">Male</option>
+			  <option value="Female">Female</option>
+			  <option value="Other">Other</option>
 			</select>  
 		</div>
 
@@ -42,12 +45,29 @@
 	</div>
 
 </div>
+<div id="webcam">
+	
+	Click on the Start WebCam button.
+	  <p>
+	 <button onclick="startWebcam();" id="strt">Start WebCam</button>
+	 
+		<button onclick="snapshot();" id="snap">Take Snapshot</button> 
+	 </p>
+	 
+ 
+
+</div>
+
 
 
 </div>
 
 </main>
+
 {% endblock %}	
 
 {% block footer %}
+
+
 {% endblock %}	
+

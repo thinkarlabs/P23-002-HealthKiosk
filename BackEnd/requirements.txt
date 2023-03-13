@@ -1,0 +1,11 @@
+python-dotenv
+python-multipart
+pymongo[srv]
+fastapi
+uvicorn
+twilio==6.63.2
+passlib
+bcrypt
+fastapi-jwt-auth
+fastapi-jwt-auth[asymmetric]
+openai
