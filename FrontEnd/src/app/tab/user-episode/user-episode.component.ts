@@ -11,9 +11,12 @@ import { BotOpenAiService } from "../../services/bot-open-ai.service";
 })
 export class UserEpisodeComponent {
   flag = true;
+  micEnabled = true;
+
   public webcamImage!: WebcamImage;
   showAngularImage =true;
-  
+  // const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  audioMuted = false;
  newMessage = '';
  
  summary = '';
@@ -29,7 +32,17 @@ export class UserEpisodeComponent {
    
   }
 
- 
+  async toggleMic() {
+    const mediaStream = navigator.mediaDevices.getUserMedia({ audio: true });
+    (await mediaStream).getAudioTracks().forEach(track => {
+      track.enabled = !this.micEnabled;
+    });
+    this.micEnabled = !this.micEnabled;
+  }
+  async toggleMute() {
+  this.service.mute()
+  
+  }
   startService() {
     if (this.flag) {
       this.flag = false;
@@ -54,6 +67,7 @@ export class UserEpisodeComponent {
     this.service.stop();
   }
   onSubmit() {
+    
     this.router.navigate(["episode_wait"]);
     
   

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import EpisodeJson from '../episode/episode.json'
+
 interface EPISODE{
         ep_name:String; 
         ep_pic:String;
@@ -18,6 +19,7 @@ interface EPISODE{
   styleUrls: ['./episode.component.css']
 })
 export class EpisodeComponent {
+
   Episode: EPISODE[]= EpisodeJson;
   constructor(private router: Router){
     console.log(this.Episode);

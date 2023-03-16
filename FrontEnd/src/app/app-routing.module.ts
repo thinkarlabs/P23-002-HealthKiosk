@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'registration', component : UserRegistrationComponent},
   // { path:'phone',component :  PhoneRegistrationComponent},
   { path :'phone',component:PhoneNumberComponent},
+  
   { path:'', component:KioskComponent},
   { path:'otp',component:PhoneOtpComponent},
   { path:'userprofile', component:UserProfilesComponent},
