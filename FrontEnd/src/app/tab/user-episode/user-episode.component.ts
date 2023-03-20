@@ -1,7 +1,7 @@
  import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { WebcamImage } from "ngx-webcam";
-
+import { ActivatedRoute } from '@angular/router';
 import { BotOpenAiService } from "../../services/bot-open-ai.service";
 @Component({
   selector: "pm-user-episode",
@@ -15,8 +15,8 @@ export class UserEpisodeComponent {
 
   public webcamImage!: WebcamImage;
   showAngularImage =true;
-  // const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  audioMuted = false;
+  //  const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  // audioMuted = false;
  newMessage = '';
  
  summary = '';
@@ -24,7 +24,7 @@ export class UserEpisodeComponent {
 
   messageList: string[] = [];
   
-  constructor(private router: Router, public service: BotOpenAiService) {
+  constructor(private router: Router, public service: BotOpenAiService,private route :ActivatedRoute ) {
     this.service.init();
   }
   ngOnInit() {
@@ -40,13 +40,14 @@ export class UserEpisodeComponent {
     this.micEnabled = !this.micEnabled;
   }
   async toggleMute() {
-  this.service.mute()
+  this.service.mute();
+  // console.warn()
   
   }
   startService() {
     if (this.flag) {
       this.flag = false;
-      debugger;
+      // debugger;
       let elem = document.getElementById("strt");
       elem.textContent = "Finish";
       this.service.start();

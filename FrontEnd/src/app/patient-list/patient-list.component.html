@@ -56,14 +56,14 @@
                   <img src="{{item.ep_pic}}" style="width:60px;height:60px" class="card-img-top img-fluid rounded-circle" alt="..."> 
                   </td>
                    <td class="col-2 align-self-start"  >{{item.ep_name}}</td>
-                   <td>{{item.ep_gender}}</td> -->
+                   <td>{{item.ep_gender}}</td> 
                   <!-- <td>{{item.ep_gender}} , {{item.ep_age}} yrs</td>
                     
                   <td>{{item.ep_date}} , {{item.ep_time}}</td> -->
                   <td>{{item.ep_smry}}</td>
                   <td class="col-1 align-self-start">
-                    <i class="bi bi-telephone-outbound p-2" data-nav="admin.episode.call"></i>
-                    <i class="bi bi bi-check-square p-2" data-nav="admin.episode.confirm"></i>
+                    <i class="bi bi-telephone-outbound p-2" ></i>
+                    <i class="bi bi bi-check-square p-2" (click)="adminepisodeconfirm()"></i>
                   
                 </tr>
              	

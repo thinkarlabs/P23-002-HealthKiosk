@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import EpisodeJson from '../tab/episode/episode.json';
 interface EPISODE{
   ep_name:String; 
@@ -18,13 +19,16 @@ interface EPISODE{
 })
 export class PatientListComponent {
   Episode: EPISODE[]= EpisodeJson;
-  // constructor(private router: Router){
-  //   console.log(this.Episode);
-  // }
- 
-  constructor() {
+  constructor(private router: Router){
     console.log(this.Episode);
+  }
+  adminepisodeconfirm(){
+    this.router.navigate(['ConfirmPatientAppointmentComponent'])
+  }
+ 
+  // constructor() {
+  //   console.log(this.Episode);
    
       
-   }
+  //  }
 }

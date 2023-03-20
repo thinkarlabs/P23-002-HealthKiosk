@@ -13,12 +13,12 @@ import { EpisodeWaitComponent } from './tab/episode-wait/episode-wait.component'
 import { EpisodeComponent } from './tab/episode/episode.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
-
+import { ConfirmPatientAppointmentComponent } from './common/confirm-patient-appointment/confirm-patient-appointment.component';
 const routes: Routes = [
   { path: 'registration', component : UserRegistrationComponent},
   // { path:'phone',component :  PhoneRegistrationComponent},
   { path :'phone',component:PhoneNumberComponent},
-  
+  { path:'ConfirmPatientAppointmentComponent',component:ConfirmPatientAppointmentComponent},
   { path:'', component:KioskComponent},
   { path:'otp',component:PhoneOtpComponent},
   { path:'userprofile', component:UserProfilesComponent},

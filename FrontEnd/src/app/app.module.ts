@@ -18,6 +18,7 @@ import { UserEpisodeComponent } from './tab/user-episode/user-episode.component'
 import { FooterComponent } from './common/footer/footer.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
+import { ConfirmPatientAppointmentComponent } from './common/confirm-patient-appointment/confirm-patient-appointment.component';
 // import { MobileComponent } from './mobile/mobile.component';
 
 
@@ -37,6 +38,7 @@ import { PhoneNumberComponent } from './phone-number/phone-number.component';
     EpisodeConfirmComponent,
     PatientListComponent,
     PhoneNumberComponent,
+    ConfirmPatientAppointmentComponent,
    
     
     

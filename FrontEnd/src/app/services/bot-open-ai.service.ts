@@ -26,6 +26,7 @@ export class BotOpenAiService {
   queText ='';
   resText='';
   nativeElement: any;
+  
   tempWord= '';
 
   constructor(public http: UserRegistrationService,private router: Router) {}
@@ -137,18 +138,22 @@ export class BotOpenAiService {
     // Built-in speak method for the API
     synth.speak(utterance);
   }
-  mute() {
+  async mute() {
+    
     var synth = window.speechSynthesis;
-    var utterance = new SpeechSynthesisUtterance(this.resText);
+    var utterance = new SpeechSynthesisUtterance(this.tempWord);
     utterance.pitch = 0;
     utterance.rate = 0;
-    
-    
+    var voices;
+    // Populate voices with available options
+    window.speechSynthesis.onvoiceschanged = function () {
+      voices = synth.getVoices();
+    };
     // Set the voice to US English female
-    utterance.voice = speechSynthesis.getVoices().filter(function (voice) {
-      return voice.name == "Google US English";
-    })[0];
+    // utterance.voice = speechSynthesis.getVoices().filter(function (voice) {
+    //   return voice.name == "Google US English";
+    // })[0];
     // Built-in speak method for the API
-    synth.speak(utterance);
+    // synth.speak(utterance);
   }
 }
