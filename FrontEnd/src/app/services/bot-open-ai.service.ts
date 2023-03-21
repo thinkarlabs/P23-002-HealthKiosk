@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { UserRegistrationService } from "./user-registration.service";
-
+import { WebsocketService } from "./websocket.service";
 declare var webkitSpeechRecognition: any;
 
 @Injectable({
@@ -13,8 +13,10 @@ export class BotOpenAiService {
   tempWords = '';
   queText ='';
   resText='';
-
-  constructor(public http: UserRegistrationService) {}
+  sumText='Hi sun summary';
+  constructor(public webSocketService: WebsocketService, public http: UserRegistrationService) {
+    //this.webSocketService.connect();
+  }
 
   init() {
     this.recognition.interimResults = true;
@@ -54,7 +56,7 @@ export class BotOpenAiService {
   }
 
   openai(data: any) {
-    // debugger
+    // 
     if (data) {
       this.http.openaiResult(data).subscribe((data) => {
         console.warn("Return openai data", data);
@@ -68,7 +70,7 @@ export class BotOpenAiService {
   }
 
   speak11() {
-    //debugger;
+    //;
     if ("speechSynthesis" in window) {
       var synthesis = window.speechSynthesis;
 
@@ -105,7 +107,7 @@ export class BotOpenAiService {
     this.text = this.text + "\nBot: " + this.resText + " \n Patient: " + this.tempWords ;
     //this.tempWords = "";
     //this.resText = "";
-    ///debugger
+    ///
     //this.resText = ""
   }
 
@@ -135,7 +137,10 @@ export class BotOpenAiService {
   submit(){
     this.http.submitTranscript(this.text).subscribe((data) => {
       console.warn("Return openai summary", data);
-      this.resText = data["chat"];
+      this.sumText = data["chat"];
+      //debugger;
+      //this.webSocketService.sendMessage("Return openai summary");
+     
    
     });
   }

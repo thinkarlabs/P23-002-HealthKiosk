@@ -56,3 +56,12 @@ class ChatText(BaseModel):
 class ProfileItems(BaseModel):
     number: int
     profiles: list[Profile] | None = None
+
+class Episodes(BaseModel):
+    """
+    """
+    pass
+
+class websockettest(BaseModel):
+    #id: str = Field(default_factory=uuid.uuid4, alias="_id")
+    username: str = Field(...)

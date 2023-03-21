@@ -10,20 +10,21 @@ export class UserRegistrationService {
     throw new Error("Method not implemented.");
   }
 
-  url = "http://localhost:3000/profile";
+  //url = "http://localhost:3000/profile";
+  url = "http://127.0.0.1:8000/"
   constructor(private http: HttpClient) {}
   phoneRegRequest(data: Object): Observable<Object> {
-    var apiUrl = "http://127.0.0.1:3000/register1";
+    var apiUrl = this.url + "register1";
     return this.http.post(apiUrl, data);
   }
 
   otpGenRequest(data: Object): Observable<Object> {
-    var apiUrl = "http://127.0.0.1:3000/login";
+    var apiUrl = this.url + "login";
     return this.http.post(apiUrl, data);
   }
 
   getsun() {
-    var apiUrl = "http://127.0.0.1:3000/me";
+    var apiUrl = this.url + "me";
     var auth_token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -37,7 +38,7 @@ export class UserRegistrationService {
   }
 
   getProfiles() {
-    var apiUrl = "http://127.0.0.1:3000/profile";
+    var apiUrl = this.url + "profile";
     var auth_token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
@@ -51,9 +52,8 @@ export class UserRegistrationService {
   }
 
   saveuser(data: any) {
-    var apiUrl = "http://127.0.0.1:3000/profile";
+    var apiUrl = this.url + "profile";
     var auth_token = localStorage.getItem("token");
-    debugger;
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       Authorization: "Bearer " + auth_token,
@@ -64,12 +64,12 @@ export class UserRegistrationService {
   }
 
   openaiResult(data: any) {
-    var apiUrl = "http://127.0.0.1:3000/predict";
+    var apiUrl = this.url + "predict";
     return this.http.post(apiUrl, { chat: data });
   }
 
   submitTranscript(data: any) {
-    var apiUrl = "http://127.0.0.1:3000/summary";
+    var apiUrl = this.url + "summary";
     return this.http.post(apiUrl, { chat: data });
   }
 

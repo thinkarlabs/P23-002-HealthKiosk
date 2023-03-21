@@ -2,16 +2,18 @@ import random
 import os
 import json
 from datetime import datetime, timedelta
-from fastapi import APIRouter, Body, Request, Form, Response, HTTPException, status, Depends
+from fastapi import APIRouter, Body, Request, Form,\
+    Response, HTTPException, status, Depends,  WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems
+from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems, websockettest
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
 from  app.chat import get_response, get_transcript_summary
 
 router = APIRouter()
+
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
@@ -80,7 +82,7 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
 
     # Send both access
     # Python code to illustrate with() alongwith write()
-    #import pdb;pdb.set_trace()
+    
     if new_project.get('profile', None): #new_project['profile']:
         data = { "header": "Applicants", "profiles": new_project['profile'], "empty": False}
         profiles = new_project['profile']
@@ -124,10 +126,22 @@ def summary(request: Request, chat: ChatText):
     message = {"chat": response}
     return message
 
+@router.post("/episode")
+def get_profiles(request: Request, response: Response, chat: ChatText ):
+    new_project = request.app.database["patient"].find_one({'number':123})
+    #import pdb;pdb.set_trace()
+    if new_project.get('profile', None):
+        data = new_project['profile']
+    else:
+        data = []
+    #
+    return {'profile': data}
+
+
 
 @router.post("/profile")
 def add_profile(request: Request,response: Response, profile: Profile, user_id: str = Depends(oauth2.require_user)):
-    #import pdb;pdb.set_trace()
+  
     project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
     { '$push': { 
         'profile': {
@@ -154,16 +168,16 @@ def add_profile(request: Request,response: Response, profile: Profile, user_id: 
 #from typing import List
 #@router.get("/profile", status_code=status.HTTP_200_OK, response_model=List[Profile])
 @router.get("/profile")
-def get_profiles(request: Request,response: Response,  user_id: str = Depends(oauth2.require_user)):
+def get_profiles(request: Request, response: Response,  user_id: str = Depends(oauth2.require_user)):
     new_project = request.app.database["patient"].find_one({'number':int(user_id)})
     if new_project.get('profile', None):
         data = new_project['profile']
     else:
         data = []
     #
-    # 
-    # import pdb;pdb.set_trace()
     return {'profile': data}
+
+
 
 
 
@@ -206,3 +220,66 @@ def create_user(request: Request, response: Response, payload: Phone = Body(...)
         }
         new_project = request.app.database["patient"].insert_one(user_dict) #pymongo object
     return {'phone': verified_number, 'otp': otp }
+
+
+
+
+
+
+@router.post("/lala")
+def register_user(request: Request, response: Response, user: websockettest):
+    
+    response.set_cookie(key="X-Authorization", value=user.username, httponly=True)
+
+"""@app.post("/api/register")
+def register_user(request: Request, response: Response, user: RegisterValidator):
+ 
+    response.set_cookie(key="X-Authorization", value=user.username, httponly=True)"""
+
+
+class SocketManager:
+    def __init__(self):
+        self.active_connections: List[(WebSocket, str)] = []
+
+    async def connect(self, websocket: WebSocket, user: str):
+        await websocket.accept()
+        self.active_connections.append((websocket, user))
+
+    def disconnect(self, websocket: WebSocket, user: str):
+        self.active_connections.remove((websocket, user))
+
+    async def broadcast(self, data: dict):
+        for connection in self.active_connections:
+            await connection[0].send_json(data)
+
+
+manager = SocketManager()
+
+@router.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text(f"Message text was: {data}")
+
+@router.websocket("/api/chat")
+async def chat(websocket: WebSocket):
+    #import pdb;pdb.set_trace()
+    sender = "sunil" #websocket.cookies.get("X-Authorization")
+
+    if sender:
+        await manager.connect(websocket, sender)
+        response = {
+            "sender": sender,
+            "message": "got connected"
+        }
+        await manager.broadcast(response)
+        try:
+            while True:
+                data = await websocket.receive_json()
+                await manager.broadcast(data)
+        except WebSocketDisconnect:
+            manager.disconnect(websocket, sender)
+            response['message'] = "left"
+            await manager.broadcast(response)
+

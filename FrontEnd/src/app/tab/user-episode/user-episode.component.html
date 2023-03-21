@@ -39,7 +39,7 @@
           </figure>
       </div>
       <div class="col-12 mt-4">
-          <button class="bg-primary text-light btn-lg " (click)="onSubmit()" style="width:220px" >Submit</button>
+          <button id="sunlala" class="bg-primary text-light btn-lg " (click)="onSubmit()" style="width:220px" >Submit</button>
           <button class="bg-primary text-light btn-lg " (click)="onClose()" style="width:220px" >Close</button>
       </div>
   </div>
@@ -51,4 +51,31 @@
           </textarea>
       </div>
   </div>
+  <input type="hidden" id="summId" name="custId" value="">
 </div>
+<script>
+    $(document).ready(function(){
+        var current_user;
+        $.get("/api/current_user",function(response){
+            current_user = response;
+            $("#profile").text(current_user);
+        });
+        var receiver = "";
+        // create websocket
+        var socket = new WebSocket("ws://127.0.0.1:3000/api/chat");
+        
+        $("#chat-form").on("submit", function(e){
+            e.preventDefault();
+            var message = $("input").val();
+            if (message){
+                data = {
+                    "sender": current_user,
+                    "message": message
+                };
+                socket.send(JSON.stringify(data));
+                $("input").val("");
+                document.cookie = 'X-Authorization=; path=/;';
+            }
+        });
+    });
+</script>

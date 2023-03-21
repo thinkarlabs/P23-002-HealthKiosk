@@ -32,7 +32,6 @@ def get_transcript_summary(transcript):
       frequency_penalty=0,
       presence_penalty=0
     )
-    import pdb;pdb.set_trace()
     return response["choices"][0]['text']
 
 

@@ -16,11 +16,9 @@ export class UserEpisodeComponent {
   startService() {
     if (this.flag) {
       this.flag = false;
-      debugger;
       let elem = document.getElementById("strt");
       elem.textContent = "Finish";
       this.service.start();
-      //debugger;
     } else {
       let elem = document.getElementById("strt");
       elem.textContent = "Start";
@@ -36,7 +34,10 @@ export class UserEpisodeComponent {
   }
   onSubmit() {
     this.service.submit();
-    this.router.navigate(["episode_wait"]);
+    //elem1 = document.getElementById("summId");
+    //elem1.value = "Finish";
+    //document.getElementById("summId").innerHTML = this.service.sumText;
+    //this.router.navigate(["episode_wait"]);
   }
   onClose() {
     this.router.navigate(["userprofile"]);
