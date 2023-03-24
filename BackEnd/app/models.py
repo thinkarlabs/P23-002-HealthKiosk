@@ -27,6 +27,8 @@ class Otp(BaseModel):
 class Phone(BaseModel):
     number: int = Field(...)
 
+class ProfileId(BaseModel):
+    id: str = Field(...)
 
 class UserOtp(BaseModel):
     number: str = Field(...)
@@ -60,8 +62,9 @@ class ProfileItems(BaseModel):
 class Episodes(BaseModel):
     """
     """
-    pass
-
+    id: str = Field(...)
+    chat: str
+    
 class websockettest(BaseModel):
     #id: str = Field(default_factory=uuid.uuid4, alias="_id")
     username: str = Field(...)

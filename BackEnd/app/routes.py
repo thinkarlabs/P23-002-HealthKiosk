@@ -1,12 +1,13 @@
 import random
 import os
 import json
+from bson import json_util
 from datetime import datetime, timedelta
 from fastapi import APIRouter, Body, Request, Form,\
     Response, HTTPException, status, Depends,  WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
 from typing import List
-from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems, websockettest
+from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems, websockettest, ProfileId, Episodes
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
@@ -15,9 +16,8 @@ from  app.chat import get_response, get_transcript_summary
 router = APIRouter()
 
 
-
-@router.post('/register', status_code=status.HTTP_201_CREATED, response_model=Otp)
-def create_user(request: Request, payload: Phone = Body(...)):
+@router.post('/register1')
+def create_user(request: Request, response: Response, payload: Phone = Body(...)):
     otp = random.randint(100000,999999) #12
     print("Your OTP is - ",otp)
     c_code = "+91"
@@ -30,12 +30,12 @@ def create_user(request: Request, payload: Phone = Body(...)):
         )
     except Exception:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
-    new_project = request.app.database["patient"].find_one({'number': payload.number}) #dict
+    new_project = request.app.database["mobile"].find_one({'number': payload.number}) #dict
     if new_project:
         new_project['updated_at'] = datetime.utcnow()
         new_project['h_pass'] =  utils.hash_password(otp)
         new_project['otp'] = otp+64
-        new_project = request.app.database["patient"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
+        new_project = request.app.database["mobile"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
         
     else:
         created_at= datetime.utcnow()
@@ -46,8 +46,8 @@ def create_user(request: Request, payload: Phone = Body(...)):
             'h_pass' : utils.hash_password(otp),
             'otp' : otp+64
         }
-        new_project = request.app.database["patient"].insert_one(user_dict) #pymongo object
-    return {'condition': True}
+        new_project = request.app.database["mobile"].insert_one(user_dict) #pymongo object
+    return {'phone': verified_number, 'otp': otp }
 
 
 @router.post('/login')
@@ -56,7 +56,7 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
     ACCESS_TOKEN_EXPIRES_IN =  int(request.app.ACCESS_TOKEN_EXPIRES_IN)
     REFRESH_TOKEN_EXPIRES_IN =  int(request.app.REFRESH_TOKEN_EXPIRES_IN)
     otp = payload.number + 64
-    new_project = request.app.database["patient"].find_one({'otp': otp})
+    new_project = request.app.database["mobile"].find_one({'otp': otp})
 
     if not new_project:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
@@ -89,17 +89,13 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
     else:
         data = {}
         profiles = []
-    """   
-    path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
-    with open(path, "w") as f:
-        f.write(json.dumps(data, indent=4))"""
-    
+
     return {'profile': profiles, 'access_token': access_token}
 
 
 @router.get('/me', response_model=UserResponse)
 def get_me(request: Request, user_id: str = Depends(oauth2.require_user)):
-    new_project = request.app.database["patient"].find_one({'number':int(user_id)})
+    new_project = request.app.database["mobile"].find_one({'number':int(user_id)})
     #user = userResponseEntity(User.find_one({'_id': ObjectId(str(user_id))}))
     return {"status": "success", "user": new_project}
 
@@ -120,15 +116,29 @@ def predict(request: Request, chat: ChatText):
 
 #user_id: str = Depends(oauth2.require_user)
 @router.post("/summary", status_code=status.HTTP_200_OK, response_model=ChatText)
-def summary(request: Request, chat: ChatText):
+def summary(request: Request, chat: Episodes):
     #text = request.get_json().get("message")  # TODO: check if text is valid
     response = get_transcript_summary(chat.chat)
     message = {"chat": response}
+
+    from bson.objectid import ObjectId
+
+    created_at= datetime.utcnow()
+    #import pdb;pdb.set_trace()
+    project = request.app.database["profile"].update_one({'_id':ObjectId(chat.id)}, 
+    { '$push': { 
+        'episodes': {
+            'created_at' : created_at.strftime('%B %d %Y - %H:%M:%S'),
+            "summary": response
+        }
+    }}
+    )
+
     return message
 
 @router.post("/episode")
 def get_profiles(request: Request, response: Response, chat: ChatText ):
-    new_project = request.app.database["patient"].find_one({'number':123})
+    new_project = request.app.database["mobile"].find_one({'number':123})
     #import pdb;pdb.set_trace()
     if new_project.get('profile', None):
         data = new_project['profile']
@@ -138,47 +148,34 @@ def get_profiles(request: Request, response: Response, chat: ChatText ):
     return {'profile': data}
 
 
-
 @router.post("/profile")
 def add_profile(request: Request,response: Response, profile: Profile, user_id: str = Depends(oauth2.require_user)):
-  
-    project = request.app.database["patient"].update_one({ 'number': int(user_id) }, 
-    { '$push': { 
-        'profile': {
+    user_dict = {
+            'number' : int(user_id),
             "profile_name": profile.profile_name,
             "profile_pic": profile.profile_pic,
             "profile_age": profile.profile_age,
             "profile_gender": profile.profile_gender
         }
-    }}
-    )
+    new_project = request.app.database["profile"].insert_one(user_dict) #pymongo object
+    new_project = request.app.database["profile"].find({'number':int(user_id)})
+    response = json.loads(json_util.dumps(new_project))
+    return {'profile': response}
+   
 
-    new_project = request.app.database["patient"].find_one({'number':int(user_id)})
-    if new_project['profile']:
-        data = new_project['profile']
-    else:
-        data = []
-    return {'profile': data}
-    """path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))),'static','data', 'profiles.txt')
-    with open(path, "w") as f:
-        f.write(json.dumps(data, indent=4))
-    return {'condition': True}
-    """
-
-#from typing import List
-#@router.get("/profile", status_code=status.HTTP_200_OK, response_model=List[Profile])
 @router.get("/profile")
 def get_profiles(request: Request, response: Response,  user_id: str = Depends(oauth2.require_user)):
-    new_project = request.app.database["patient"].find_one({'number':int(user_id)})
-    if new_project.get('profile', None):
-        data = new_project['profile']
-    else:
-        data = []
-    #
-    return {'profile': data}
+    new_project = request.app.database["profile"].find({'number':int(user_id)})
+    response = json.loads(json_util.dumps(new_project))
+    return {'profile': response}
 
-
-
+@router.post("/oneprofile")
+def get_profiles(request: Request, response: Response, profile_id: ProfileId):
+    #import pdb;pdb.set_trace()
+    from bson.objectid import ObjectId
+    new_project =request.app.database["profile"].find_one({'_id':ObjectId(profile_id.id)})
+    response = json.loads(json_util.dumps(new_project))
+    return {'profile': response}
 
 
 @router.get("/sun")
@@ -188,38 +185,7 @@ def get_profiles(request: Request,response: Response):
 
 
 
-@router.post('/register1')
-def create_user(request: Request, response: Response, payload: Phone = Body(...)):
-    otp = random.randint(100000,999999) #12
-    print("Your OTP is - ",otp)
-    c_code = "+91"
-    verified_number = c_code + str(payload.number)
-    """try:
-        message = request.app.client.messages.create(
-            body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
-            from_=request.app.twilio_number,
-            to=verified_number
-        )
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='Twilio Otp Connection Error!')"""
-    new_project = request.app.database["patient"].find_one({'number': payload.number}) #dict
-    if new_project:
-        new_project['updated_at'] = datetime.utcnow()
-        new_project['h_pass'] =  utils.hash_password(otp)
-        new_project['otp'] = otp+64
-        new_project = request.app.database["patient"].find_one_and_update({'number': payload.number}, {"$set": new_project}) #dict
-        
-    else:
-        created_at= datetime.utcnow()
-        user_dict = {
-            'number' : payload.number,
-            'created_at' : created_at,
-            'updated_at': created_at,
-            'h_pass' : utils.hash_password(otp),
-            'otp' : otp+64
-        }
-        new_project = request.app.database["patient"].insert_one(user_dict) #pymongo object
-    return {'phone': verified_number, 'otp': otp }
+
 
 
 

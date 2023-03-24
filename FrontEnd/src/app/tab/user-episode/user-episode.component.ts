@@ -33,7 +33,9 @@ export class UserEpisodeComponent {
     this.service.stop();
   }
   onSubmit() {
-    this.service.submit();
+
+    var id = window.location.pathname.split("/").pop()
+    this.service.submit(id);
     //elem1 = document.getElementById("summId");
     //elem1.value = "Finish";
     //document.getElementById("summId").innerHTML = this.service.sumText;

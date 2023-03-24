@@ -31,13 +31,14 @@
       </div>
 
       <div class="col-3 text-center mb-3 " *ngFor="let user of Profiles">
-        <button class="btn btn-primary p-1 rounded-0" (click)="onClicking()" style="width:250px;height:250px">
+        <button class="btn btn-primary p-1 rounded-0" (click)="onClicking(user._id.$oid)" style="width:250px;height:250px">
           <img src="{{user.profile_pic}}" style="width:125px;height:125px" class="card-img-top img-fluid rounded-circle"
             alt="...">
           <div class="card-body ">
             <h5 class="card-title">{{user.profile_name}}</h5>
             <p class="card-text">{{user.profile_gender}}, {{user.profile_age}} yrs</p>
           </div>
+          <input type="hidden" id="ProfId" name="ProfId" value={{user._id.$oid}}>
         </button>
       </div>
 

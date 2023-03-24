@@ -51,6 +51,20 @@ export class UserRegistrationService {
     //return this.http.get(apiUrl);
   }
 
+  getProfile(data:any) {
+    var apiUrl = this.url + "oneprofile";
+    var auth_token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + auth_token,
+    });
+
+    const requestOptions = { headers: headers };
+    return this.http.post(apiUrl, {'id':data}, requestOptions);
+
+    //return this.http.get(apiUrl);
+  }
+
   saveuser(data: any) {
     var apiUrl = this.url + "profile";
     var auth_token = localStorage.getItem("token");
@@ -70,7 +84,14 @@ export class UserRegistrationService {
 
   submitTranscript(data: any) {
     var apiUrl = this.url + "summary";
-    return this.http.post(apiUrl, { chat: data });
+    return this.http.post(apiUrl, data);
   }
+
+  // saveEpisodesummary(data: any){
+  //   var apiUrl = this.url + "summary";
+  //   return this.http.post(apiUrl, { chat: data });
+
+  // }
+
 
 }

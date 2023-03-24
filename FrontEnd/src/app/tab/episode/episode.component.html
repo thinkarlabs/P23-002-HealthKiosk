@@ -12,7 +12,7 @@
 <main class="container-full">
 	<div id='x-main' class="container-md mt-5 py-1" style="min-height:500px">
 		<div class="col-12">
-			<h3>Episodes for Rathnamma K T, Female, 82 yrs</h3>
+			<h3>Episodes for {{Episode.profile_name}}, {{Episode.profile_gender}}, {{Episode.profile_age}} yrs</h3>
 		</div>
 		<div class="row-3 ml-4">
 		</div>
@@ -21,12 +21,12 @@
 				<img src="https://png.pngtree.com/png-vector/20190429/ourmid/pngtree-vector-add-icon-png-image_998225.jpg"
 					style="width:150px;height:150px" class="card-img-top img-fluid rounded-circle" alt="...">
 			</button>
-			<div class="btn btn-secondary py-3 rounded-0 ml-4" *ngFor="let item of Episode" (click)="onClicking()"
+			<div class="btn btn-secondary py-3 rounded-0 ml-4" *ngFor="let item of Episode.episodes" (click)="onClicking()"
 				style="height:250px">
 				<div class="card-body  " style="width:250px;height:250px" class="card-img-top img-fluid rounded-circle">
-					<h5 class="card-title ">{{item.ep_date}}</h5>
-					<p class="card-textc ">{{item.ep_doc}}</p>
-					<p class="card-text ">{{item.ep_smry}}</p>
+					<h5 class="card-title ">{{item.created_at}}</h5>
+					<p class="card-textc ">BOT</p>
+					<p class="card-text ">{{item.summary}}</p>
 				</div>
 			</div>
 		</div>

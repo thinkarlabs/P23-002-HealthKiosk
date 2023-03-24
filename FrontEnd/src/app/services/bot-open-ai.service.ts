@@ -134,16 +134,24 @@ export class BotOpenAiService {
     synth.speak(utterance);
   }
 
-  submit(){
-    this.http.submitTranscript(this.text).subscribe((data) => {
+  submit(id:any){
+    this.http.submitTranscript({'id': id, 'chat':this.text}).subscribe((data) => {
       console.warn("Return openai summary", data);
       this.sumText = data["chat"];
+      //this.saveEpisode({"id": id, "summary": data["chat"]});
       //debugger;
-      //this.webSocketService.sendMessage("Return openai summary");
-     
-   
+      //this.webSocketService.sendMessage("Return openai summary")
     });
   }
+
+  // saveEpisode(data:any){
+  //   this.http.saveEpisodesummary(data).subscribe((data) => {
+  //     console.warn("Return respone", data);
+      
+  //     //debugger;
+  //     //this.webSocketService.sendMessage("Return openai summary")
+  //   });
+  // }
 
 
 }
