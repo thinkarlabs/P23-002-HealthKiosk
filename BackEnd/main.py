@@ -22,7 +22,7 @@ app.REFRESH_TOKEN_EXPIRES_IN = config['REFRESH_TOKEN_EXPIRES_IN']
 
 app.verified_number = config['SM_TO']
 app.twilio_number = config['TWILIO_NUMBER']
-app.client = Client(app.account_sid, app.auth_token)
+# app.client = Client(app.account_sid, app.auth_token)
 
 from fastapi.middleware.cors import CORSMiddleware
 #from nltk import edit_distance

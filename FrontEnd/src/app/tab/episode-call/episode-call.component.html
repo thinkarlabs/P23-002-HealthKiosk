@@ -1,12 +1,14 @@
 <div id='x-header'>
 	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
-	  <div class="container-fluid">
-		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
-		<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
-	
-		
-	  </div>
-	</nav></div>
+		<div class="container-fluid">
+			<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px" />
+			<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<!-- <a class ="float-end mx-2 btn-lg align-self-end ml-auto text-white"  routerLink="/phone">Kiosk App</a> -->
+			</div>
+		</div>
+	</nav>
+</div>
 <main class="container-full">
     <div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
     
@@ -31,7 +33,7 @@
             </textarea>
             </div>
     
-          <button class="bg-primary text-light btn-lg mt-4" data-nav="tab.episode.confirm">Confirm</button>
+          <button class="bg-primary text-light btn-lg mt-4" (click)="onConfirm()">Confirm</button>
           
           <button class="bg-primary text-light btn-lg mt-4" (click)="onClose()">Close</button>
     

@@ -1,81 +1,105 @@
 <div id='x-header'>
-  <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-2">
-      <div class="container-fluid">
-          <img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px" />
-          <p class="navbar-brand my-0  ms-2">Think Healthcare</p>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-          </div>
-      </div>
-  </nav>
+    <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-2">
+        <div class="container-fluid">
+            <img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px" />
+            <p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+            </div>
+        </div>
+    </nav>
 </div>
 <main class="container-full">
-<div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
-<div class="row mt-4 py-0">
-  <div class="col-3 text-center">
-      <img src="assets/img/maya.jpg" style="width:250px;height:250px" class="card-img-top img-fluid rounded-circle" alt="...">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg" style="width:250px;height:250px" class="card-img-top mt-4" alt="...">
-  </div>
-  <div class="col-6 text-center">
-      <div class="border border-dark border-3" style="height:100px">
-          <figure class="text-center p-2">
-              <blockquote class="blockquote">
-                  <p>{{service.resText}}</p>
-              </blockquote>
-          </figure>
-      </div>
-      <div class="row mt-4">
-          <div class="btn-group col-12" role="group" aria-label="Basic example">
-              <!-- <button type="button" class="btn btn-primary"><span class="bi bi-mic-mute-fill"></span></button> -->
-              <button type="button" class="btn btn-primary"><i class="bi bi-mic-mute"></i></button> 
-              <button type="button" class="btn btn-primary"><i class="bi bi-volume-mute"></i></button>
-              <button type="button" class="btn btn-primary" id="strt" (click)="startService()">Start</button>
-          </div>
-      </div>
-      <div class="border border-dark border-3 mt-4" style="height:100px">
-          <figure class="text-center p-2">
-              <blockquote class="blockquote">
-                  <p>{{service.queText}}</p>
-              </blockquote>
-          </figure>
-      </div>
-      <div class="col-12 mt-4">
-          <button id="sunlala" class="bg-primary text-light btn-lg " (click)="onSubmit()" style="width:220px" >Submit</button>
-          <button class="bg-primary text-light btn-lg " (click)="onClose()" style="width:220px" >Close</button>
-      </div>
-  </div>
-  <div class="col-3 text-center">
-      <div class="text-start">
-          <h3>Transcript</h3>
-          <textarea rows="7" class="w-100 h-100 border border-dark border-3" style="min-height:450px">
-            {{service.text}}	
-          </textarea>
-      </div>
-  </div>
-  <input type="hidden" id="summId" name="custId" value="">
-</div>
-<script>
-    $(document).ready(function(){
-        var current_user;
-        $.get("/api/current_user",function(response){
-            current_user = response;
-            $("#profile").text(current_user);
+    <div id='x-main' class="container-fluid mt-5 py-1" style="min-height:700px">
+
+        <div class="row mt-4 py-0">
+            <div class="col-3 text-center">
+                <img src="assets/img/maya.jpg" style="width:250px;height:250px"
+                    class="card-img-top img-fluid rounded-circle" alt="...">
+                    <div class="card-body mb-3">
+                <webcam [height]="250" [width]="250" class="card-img-top img-fluid rounded-circle">
+                </webcam></div>
+
+
+            </div>
+            <div class="col-6 text-center">
+
+
+                <div class="border border-dark border-3 mt-4" style="height:90px">
+
+
+
+
+                    <blockquote class="blockquote">
+                        <textarea rows="3" class="w-100 h-100 text-center ">{{service.resText}}</textarea>
+                    </blockquote>
+
+
+                </div>
+                <div class="row mt-4">
+                    <div class="btn-group col-12" role="group" aria-label="Basic example">
+
+                        <button type="button" class="btn btn-primary"><i class="bi bi-mic-mute"
+                                (click)="toggleMic()"></i></button>
+                        <button type="button" class="btn btn-primary"><i class="bi bi-volume-mute"
+                                (click)="toggleMute()"></i></button>
+                        <button type="button" class="btn btn-primary" id="strt" (click)="startService()">Start</button>
+                    </div>
+                </div>
+                <div class="border border-dark border-3 mt-4" style="height:100px">
+                    <figure class="text-center p-2">
+                        <blockquote class="blockquote">
+                            <p>{{service.queText}}</p>
+                        </blockquote>
+                    </figure>
+                </div>
+                <div class="col-12 mt-4">
+                    <button class="bg-primary text-light btn-lg " (click)="onSubmit()"
+                        style="width:220px">Submit</button>
+                    <button class="bg-primary text-light btn-lg " (click)="onClose()" style="width:220px">Close</button>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-3 text-center">
+                <div class="text-start">
+                    <h3>Transcript</h3>
+                    <textarea rows="7" class="w-100 h-100 border border-dark border-3" style="min-height:450px">
+              {{service.text}}	
+            </textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+        <input type="hidden" id="summId" name="custId" value="">
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            var current_user;
+            $.get("/api/current_user", function (response) {
+                current_user = response;
+                $("#profile").text(current_user);
+            });
+            var receiver = "";
+            // create websocket
+            var socket = new WebSocket("ws://127.0.0.1:3000/api/chat");
+
+            $("#chat-form").on("submit", function (e) {
+                e.preventDefault();
+                var message = $("input").val();
+                if (message) {
+                    data = {
+                        "sender": current_user,
+                        "message": message
+                    };
+                    socket.send(JSON.stringify(data));
+                    $("input").val("");
+                    document.cookie = 'X-Authorization=; path=/;';
+                }
+            });
         });
-        var receiver = "";
-        // create websocket
-        var socket = new WebSocket("ws://127.0.0.1:3000/api/chat");
-        
-        $("#chat-form").on("submit", function(e){
-            e.preventDefault();
-            var message = $("input").val();
-            if (message){
-                data = {
-                    "sender": current_user,
-                    "message": message
-                };
-                socket.send(JSON.stringify(data));
-                $("input").val("");
-                document.cookie = 'X-Authorization=; path=/;';
-            }
-        });
-    });
-</script>
+    </script>

@@ -16,9 +16,12 @@ import { EpisodeCallComponent } from './tab/episode-call/episode-call.component'
 import { EpisodeConfirmComponent } from './tab/episode-confirm/episode-confirm.component';
 import { UserEpisodeComponent } from './tab/user-episode/user-episode.component';
 import { FooterComponent } from './common/footer/footer.component';
-import { PatientListComponent } from './patient-list/patient-list.component';
+
 import { PhoneNumberComponent } from './phone-number/phone-number.component';
+import { DoctorHomeComponent } from './doctor-home/doctor-home.component';
+import { ConfirmpageComponent } from './confirmpage/confirmpage.component';
 // import { MobileComponent } from './mobile/mobile.component';
+
 
 
 
@@ -35,8 +38,9 @@ import { PhoneNumberComponent } from './phone-number/phone-number.component';
     EpisodeWaitComponent,
     EpisodeCallComponent,
     EpisodeConfirmComponent,
-    PatientListComponent,
     PhoneNumberComponent,
+    DoctorHomeComponent,
+    ConfirmpageComponent,
    
     
     

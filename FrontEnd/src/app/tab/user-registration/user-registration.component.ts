@@ -26,15 +26,14 @@ triggerSnapshot(webcamImage: WebcamImage):void{
 this.trigger.next();
 this.showAngularImage =! webcamImage;
 if(this.text === 'Click Here To Take Image') { 
-  this.text = 'For retake click Camera Again'
+  this.text = 'For Retake Click Camera Again'
   
 
 
 }
-// console.info('Saved webcam image', webcamImage);
-// console.log(this.webcamImage.imageAsDataUrl);
+
     this.myURL=this.webcamImage.imageAsDataUrl;
-// console.log('First Name: ',this.first_name);
+
 
 }
 myURL='';

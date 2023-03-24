@@ -9,7 +9,8 @@ export class KioskComponent {
   constructor(private router: Router){
    
   }
-  onDoctor(){
-    this.router.navigate(['patient']);
+  // onDoctor()
+  goToPatient(){
+    this.router.navigate(['doctorhome']);
   }
 }

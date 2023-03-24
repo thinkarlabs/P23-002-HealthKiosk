@@ -36,12 +36,12 @@ export class UserEpisodeComponent {
 
     var id = window.location.pathname.split("/").pop()
     this.service.submit(id);
-    //elem1 = document.getElementById("summId");
-    //elem1.value = "Finish";
-    //document.getElementById("summId").innerHTML = this.service.sumText;
-    //this.router.navigate(["episode_wait"]);
+    this.router.navigate(["episode_wait"]);
+  
   }
   onClose() {
     this.router.navigate(["userprofile"]);
   }
+  toggleMic(){}
+  toggleMute(){}
 }

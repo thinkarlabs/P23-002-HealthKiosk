@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 export class EpisodeCallComponent {
   constructor(private router: Router){}
   onClose(){
-    this.router.navigate(['userprofile']);
+    this.router.navigate(['doctorhome']);
+  }
+  onConfirm(){
+    this.router.navigate(['doctorhome']);
   }
 }
