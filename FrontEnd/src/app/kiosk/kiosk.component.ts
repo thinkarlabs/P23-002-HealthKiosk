@@ -12,8 +12,9 @@ export class KioskComponent {
   }
   goToPatient()
   {
+  
     this.router.navigate([`patientlist`]);
-    console.log("hellllooooooooooooo")
+    
   }
 
 }
