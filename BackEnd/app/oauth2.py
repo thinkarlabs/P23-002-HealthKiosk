@@ -5,14 +5,9 @@ from fastapi_jwt_auth import AuthJWT
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 
-#from app.serializers.userSerializers import userEntity
-
-#from .database import User
-#from app.models import settings
 import os
 from dotenv import load_dotenv
 load_dotenv()
-#os.getenv('CONNECTION_STRING')
 
 class Settings(BaseModel):
     authjwt_algorithm: str = os.getenv('JWT_ALGORITHM')
@@ -42,21 +37,15 @@ class UserNotFound(Exception):
 
 def require_user(Authorize: AuthJWT = Depends()):
     try:
-        #import pdb;pdb.set_trace()
         from pymongo import MongoClient
         mongodb_client = MongoClient(os.getenv('CONNECTION_STRING'))
         database = mongodb_client[os.getenv('DB_NAME')]
-        #request.app.database["patient"].find_one({'otp': otp})
         Authorize.jwt_required()
         user_id = Authorize.get_jwt_subject()
-        user = database["patient"].find_one({'number': int(user_id)})#userEntity(User.find_one({'_id': ObjectId(str(user_id))}))
+        user = database["mobile"].find_one({'number': int(user_id)})
 
         if not user:
             raise UserNotFound('User no longer exist')
-
-        #if not user["verified"]:
-        #    raise NotVerified('You are not verified')
-
     except Exception as e:
         error = e.__class__.__name__
         print(error)

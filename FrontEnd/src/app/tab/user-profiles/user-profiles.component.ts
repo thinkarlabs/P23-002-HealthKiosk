@@ -27,7 +27,6 @@ export class UserProfilesComponent {
    ngOnInit(){
     this.http.getProfiles().subscribe((data) =>{
       console.warn("get api data", data);
-      debugger;
       this.Profiles =  data["profile"]
     })
   }
@@ -38,8 +37,6 @@ export class UserProfilesComponent {
    
   }
   onClicking(id:any){
-    //debugger
-    
     this.router.navigate(['episode', id]);
   }
   onLogOut(){

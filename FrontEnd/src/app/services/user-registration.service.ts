@@ -14,7 +14,7 @@ export class UserRegistrationService {
   url = "http://127.0.0.1:8000/"
   constructor(private http: HttpClient) {}
   phoneRegRequest(data: Object): Observable<Object> {
-    var apiUrl = this.url + "register1";
+    var apiUrl = this.url + "register";
     return this.http.post(apiUrl, data);
   }
 

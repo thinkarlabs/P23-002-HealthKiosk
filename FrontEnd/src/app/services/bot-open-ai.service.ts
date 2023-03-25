@@ -58,7 +58,6 @@ export class BotOpenAiService {
   }
 
   openai(data: any) {
-    // debugger
     if (data) {
       this.http.openaiResult(data).subscribe((data) => {
         console.warn("Return openai data", data);
@@ -76,7 +75,6 @@ export class BotOpenAiService {
       console.warn("Return openai summary", data);
       this.sumText = data["chat"];
       // this.saveEpisode({"id": id, "summary": data["chat"]});
-      //debugger;
       //this.webSocketService.sendMessage("Return openai summary")
     });
   }

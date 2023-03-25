@@ -7,6 +7,7 @@ from fastapi import APIRouter, Body, Request, Form,\
     Response, HTTPException, status, Depends,  WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
 from typing import List
+from bson.objectid import ObjectId
 from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems, websockettest, ProfileId, Episodes
 from app.oauth2 import AuthJWT
 from . import utils
@@ -16,7 +17,7 @@ from  app.chat import get_response, get_transcript_summary
 router = APIRouter()
 
 
-@router.post('/register1')
+@router.post('/register')
 def create_user(request: Request, response: Response, payload: Phone = Body(...)):
     otp = random.randint(100000,999999) #12
     print("Your OTP is - ",otp)
@@ -93,59 +94,11 @@ def login(request: Request, payload: Phone, response: Response, Authorize: AuthJ
     return {'profile': profiles, 'access_token': access_token}
 
 
-@router.get('/me', response_model=UserResponse)
-def get_me(request: Request, user_id: str = Depends(oauth2.require_user)):
-    new_project = request.app.database["mobile"].find_one({'number':int(user_id)})
-    #user = userResponseEntity(User.find_one({'_id': ObjectId(str(user_id))}))
-    return {"status": "success", "user": new_project}
-
-
-@router.get('/logout', status_code=status.HTTP_200_OK)
-def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = Depends(oauth2.require_user)):
-    Authorize.unset_jwt_cookies()
-    response.set_cookie('logged_in', '', -1)
-    return {'status': 'success'}
-
-#user_id: str = Depends(oauth2.require_user)
-@router.post("/predict", status_code=status.HTTP_200_OK, response_model=ChatText)
-def predict(request: Request, chat: ChatText):
-    #text = request.get_json().get("message")  # TODO: check if text is valid
-    response = get_response(chat.chat)
-    message = {"chat": response}
-    return message
-
-#user_id: str = Depends(oauth2.require_user)
-@router.post("/summary", status_code=status.HTTP_200_OK, response_model=ChatText)
-def summary(request: Request, chat: Episodes):
-    #text = request.get_json().get("message")  # TODO: check if text is valid
-    response = get_transcript_summary(chat.chat)
-    message = {"chat": response}
-
-    from bson.objectid import ObjectId
-
-    created_at= datetime.utcnow()
-    #import pdb;pdb.set_trace()
-    project = request.app.database["profile"].update_one({'_id':ObjectId(chat.id)}, 
-    { '$push': { 
-        'episodes': {
-            'created_at' : created_at.strftime('%B %d %Y - %H:%M:%S'),
-            "summary": response
-        }
-    }}
-    )
-
-    return message
-
-@router.post("/episode")
-def get_profiles(request: Request, response: Response, chat: ChatText ):
-    new_project = request.app.database["mobile"].find_one({'number':123})
-    #import pdb;pdb.set_trace()
-    if new_project.get('profile', None):
-        data = new_project['profile']
-    else:
-        data = []
-    #
-    return {'profile': data}
+@router.get("/profile")
+def get_profiles(request: Request, response: Response,  user_id: str = Depends(oauth2.require_user)):
+    new_project = request.app.database["profile"].find({'number':int(user_id)})
+    response = json.loads(json_util.dumps(new_project))
+    return {'profile': response}
 
 
 @router.post("/profile")
@@ -161,40 +114,63 @@ def add_profile(request: Request,response: Response, profile: Profile, user_id: 
     new_project = request.app.database["profile"].find({'number':int(user_id)})
     response = json.loads(json_util.dumps(new_project))
     return {'profile': response}
-   
 
-@router.get("/profile")
-def get_profiles(request: Request, response: Response,  user_id: str = Depends(oauth2.require_user)):
-    new_project = request.app.database["profile"].find({'number':int(user_id)})
-    response = json.loads(json_util.dumps(new_project))
-    return {'profile': response}
 
 @router.post("/oneprofile")
 def get_profiles(request: Request, response: Response, profile_id: ProfileId):
-    #import pdb;pdb.set_trace()
-    from bson.objectid import ObjectId
     new_project =request.app.database["profile"].find_one({'_id':ObjectId(profile_id.id)})
     response = json.loads(json_util.dumps(new_project))
     return {'profile': response}
 
 
-@router.get("/sun")
-def get_profiles(request: Request,response: Response):
-    
-    return "Hello World!!!"
+@router.post("/episode")
+def get_profiles(request: Request, response: Response, chat: ChatText ):
+    new_project = request.app.database["mobile"].find_one({'number':123})
+    #import pdb;pdb.set_trace()
+    if new_project.get('profile', None):
+        data = new_project['profile']
+    else:
+        data = []
+    return {'profile': data}
 
 
+#user_id: str = Depends(oauth2.require_user)
+@router.post("/predict", status_code=status.HTTP_200_OK, response_model=ChatText)
+def predict(request: Request, chat: ChatText):
+    #text = request.get_json().get("message")  # TODO: check if text is valid
+    response = get_response(chat.chat)
+    message = {"chat": response}
+    return message
 
 
+#user_id: str = Depends(oauth2.require_user)
+@router.post("/summary", status_code=status.HTTP_200_OK, response_model=ChatText)
+def summary(request: Request, chat: Episodes):
+    #text = request.get_json().get("message")  # TODO: check if text is valid
+    response = get_transcript_summary(chat.chat)
+    message = {"chat": response}
+    created_at= datetime.utcnow()
+    project = request.app.database["profile"].update_one({'_id':ObjectId(chat.id)}, 
+    { '$push': { 
+        'episodes': {
+            'created_at' : created_at.strftime('%B %d %Y - %H:%M:%S'),
+            "summary": response
+        }
+    }}
+    )
+
+    return message
 
 
+@router.get('/logout', status_code=status.HTTP_200_OK)
+def logout(response: Response, Authorize: AuthJWT = Depends(), user_id: str = Depends(oauth2.require_user)):
+    Authorize.unset_jwt_cookies()
+    response.set_cookie('logged_in', '', -1)
+    return {'status': 'success'}
 
 
-
-
-@router.post("/lala")
-def register_user(request: Request, response: Response, user: websockettest):
-    
+@router.post("/testuser")
+def register_user(request: Request, response: Response, user: websockettest):  
     response.set_cookie(key="X-Authorization", value=user.username, httponly=True)
 
 """@app.post("/api/register")
