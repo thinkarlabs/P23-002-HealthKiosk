@@ -183,7 +183,7 @@ export class BotOpenAiService {
         this.openai(this.tempWords);
         this.wordConcat();
         //this.speak()
-        // this.wordConcat1();
+         this.wordConcat1();
         
       }
     });
@@ -246,9 +246,9 @@ export class BotOpenAiService {
     //this.resText = ""
   }
 
-  // wordConcat1() {
-  //   this.temp = this.temp + " \n Patient: " + this.tempWords + "\nBot: " + this.resText ;
-  // }
+  wordConcat1() {
+    this.temp = this.queText + " \n Patient: "  + "\nBot: " + this.resText ;
+  }
 
   speak() {
     var synth = window.speechSynthesis;
