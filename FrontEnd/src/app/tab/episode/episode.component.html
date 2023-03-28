@@ -24,9 +24,12 @@
 			<div class="btn btn-secondary py-3 mb-3 rounded-0 ml-4" *ngFor="let item of Episode.episodes" (click)="onClicking()"
 				style="height:250px">
 				<div class="card-body mb-4 " style="width:250px;height:250px" class="card-img-top img-fluid rounded-circle">
+					
 					<h5 class="card-title ">{{item.created_at}}</h5>
 					<p class="card-textc ">BOT</p>
-					<p class="card-text ">{{item.summary}}</p>
+					<textarea name="" id="BOT" cols="30" rows="6">{{item.summary}}</textarea>
+					<!-- <p class="card-text ">{{item.summary}}</p> -->
+				
 				</div>
 			</div>
 		</div>

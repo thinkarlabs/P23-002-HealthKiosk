@@ -166,7 +166,7 @@ export class BotOpenAiService {
     this.resText = "Hi How can I help you?"
     
     this.speak()
-    //this.wordConcat();
+    // this.wordConcat1();
   }
 
   start() {
@@ -183,7 +183,7 @@ export class BotOpenAiService {
         this.openai(this.tempWords);
         this.wordConcat();
         //this.speak()
-         this.wordConcat1();
+         
         
       }
     });
@@ -233,6 +233,7 @@ export class BotOpenAiService {
   stop() {
     this.isStoppedSpeechRecog = true;
     this.wordConcat();
+    this.wordConcat1();
     //  this.wordConcat1();
     this.recognition.stop();
     console.log("End speech recognition");
@@ -247,7 +248,7 @@ export class BotOpenAiService {
   }
 
   wordConcat1() {
-    this.temp = this.queText + " \n Patient: "  + "\nBot: " + this.resText ;
+    this.temp ="Patient:"+this.queText + "\nBot: " + this.resText ;
   }
 
   speak() {
