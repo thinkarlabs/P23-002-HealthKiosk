@@ -248,7 +248,7 @@ export class BotOpenAiService {
   }
 
   wordConcat1() {
-    this.temp ="Patient:"+this.queText + "\nBot: " + this.resText ;
+    this.temp = this.temp + "\nPatient:"+this.queText + "\nBot: " + this.resText ;
   }
 
   speak() {
