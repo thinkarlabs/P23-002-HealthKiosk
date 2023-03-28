@@ -21,7 +21,8 @@ app.ACCESS_TOKEN_EXPIRES_IN = config['ACCESS_TOKEN_EXPIRES_IN']
 app.REFRESH_TOKEN_EXPIRES_IN = config['REFRESH_TOKEN_EXPIRES_IN']
 
 app.verified_number = config['SM_TO']
-app.client = Client(app.account_sid, app.auth_token)
+app.twilio_number = config['TWILIO_NUMBER']
+# app.client = Client(app.account_sid, app.auth_token)
 
 from fastapi.middleware.cors import CORSMiddleware
 #from nltk import edit_distance
@@ -50,4 +51,4 @@ app.include_router(project_router)
 import uvicorn
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=3000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

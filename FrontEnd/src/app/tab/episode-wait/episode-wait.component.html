@@ -1,0 +1,39 @@
+<div id='x-header'>
+	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
+	  <div class="container-fluid">
+		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px"/>
+		<p class="navbar-brand my-0  ms-2">Think Healthcare</p>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- <a class ="float-end mx-2 btn-lg align-self-end ml-auto text-white"  routerLink="/phone">Kiosk App</a> -->
+
+		</div>
+		
+	  </div>
+	</nav></div>
+<main class="container-full">
+    <div id='x-main' class="container-fluid mt-5 py-1" style="min-height:500px">
+    
+    <div class="row mt-4 py-0">
+        <div class="col-3 text-center">
+        </div>
+        <div class="col-6 text-center">
+        
+            <div class="border border-dark border-3" style="height:100px">
+                <figure class="text-center p-2">
+                  <blockquote class="blockquote">
+                    <p>Your episode summary has been submitted. Please wait for a confirmation...</p>
+                  </blockquote>
+                </figure>
+            </div>
+        
+          <h3 class="mt-2 mb-0">Accept : </h3>
+          <button class="bg-light text-drk btn-lg mt-4" style="width:220px" (click)="onConfirmation()"disabled >Confirmation</button>
+          <button class="btn-light text-dark btn-lg mt-4" style="width:220px" (click)="onCall()"disabled>Call</button>
+          
+          <button class="bg-primary btn-light text-light btn-lg mt-4" style="width:220px"(click)="onCancel()" >Cancel</button>
+            
+        </div>
+        <div class="col-3 text-center">
+        </div>
+        
+    </div>

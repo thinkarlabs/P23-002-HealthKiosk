@@ -1,0 +1,96 @@
+
+<html lang="en"><head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+	<title>Think Healthcare</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	 
+  </head>
+  
+	<div id="x-body" class="container-full">
+<div id="x-header">
+	<nav class="navbar navbar-expand navbar-dark fixed-top bg-dark p-1">
+	  <div class="container-fluid">
+		<img src="https://www.asthrasoft.com/site/img/logo.png" style="height:25px">
+		<p class="navbar-brand my-0 ms-2">Think Healthcare</p>
+		
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+		  <!-- <ul class="navbar-nav ms-auto">
+			<li class="nav-item">
+			  <a class="nav-link active" aria-current="page" data-nav="admin.episodes">Dashboard</a>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-gear"></i></a>
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown03">
+				  <li><hr class="dropdown-divider"></li>
+				  <li><a class="dropdown-item" data-nav="settings">Settings</a></li>
+				  <li><a class="dropdown-item" data-nav="profile">Profile</a></li>
+				  <li><a class="dropdown-item" data-nav="web.login">Logout</a></li>
+				</ul>
+			</li>
+		  </ul> -->
+		</div>
+	  </div>
+	</nav>
+	
+	
+	
+</div>	
+
+
+
+<main class="container-full mt-5 p-3">
+
+<div class="container-md">
+<div id="x-contest" class="container-float">
+	<div class="row">
+
+	<h3 class="float-start">Confirm Patient Appointment</h3>
+
+	<div class="col-12 my-2">
+	  <h5 for="exampleFormControlInput1">Name : Rathnamma K T</h5>
+	  <h5 for="exampleFormControlInput1">Gender : Female, 82 yrs</h5>
+	  <h5 for="exampleFormControlInput1">Notes : Patient had a stomach ache and was not able to consume even water. No fever. Patient is diabetic.</h5>
+	</div>
+
+	<div class="col-6 my-2">
+		<label for="exampleFormControlInput1" class="ms-2">Select Doctor</label>
+		<select id="level" class="form-select mx-2">
+		  <option selected="">Doctors</option>
+		  <option value="L1">Dr Sridhar</option>
+		  <option value="L2">Dr Sumalatha</option>
+		  <option value="L3">Dr Nalini</option>
+		</select>
+	</div>
+
+	<div class="col-6 my-2">
+	  <label for="exampleFormControlInput1">Select Date/Time</label>
+	  <input type="datetime-local" class="form-control" id="exampleFormControlInput1" placeholder="">
+	</div>
+
+<div class="row">
+<div class="col-12 p-2">
+	<button type="button" class="btn btn-primary float-end mx-2" (click)="onConfirm()">Confirm</button>		
+	<button type="button" class="btn btn-primary float-end mx-2" (click)="admin_episodes()">Cancel</button>		
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+</main>
+
+
+
+
+</div>
+	
+   
+	
+  
+</html>

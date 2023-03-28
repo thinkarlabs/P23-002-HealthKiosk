@@ -2,12 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>FrontEnd</title>
+  <title>Frontendd</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+  <script>
+    $(document).ready(function(){
+        debugger;
+        var current_user= "shubh";
+        
+        var receiver = "";
+        // create websocket
+        var socket = new WebSocket("ws://127.0.0.1:8000/api/chat");
+        var ws = new WebSocket("ws://localhost:8000/ws");
+        
+        socket.onmessage = function(event) {
+          var parent = $("#pmessages");
+          var data = JSON.parse(event.data);
+          var sender = data['sender'];
+          if (sender == current_user)
+              sender = "You";
+          var message = data['message']
+          var content = "<p><strong>"+sender+" </strong> <span> "+message+"</span></p>";
+          parent.append(content);
+      };
+
+        $("#sunlala").click(function(e){
+            e.preventDefault();
+            var message = "I am having fewer" //service.sumText;
+            if (message){
+                data = {
+                    "sender": current_user,
+                    "message": message
+                };
+                socket.send(JSON.stringify(data));
+                $("input").val("");
+                document.cookie = 'X-Authorization=; path=/;';
+            }
+        });
+    });
+  </script>
+  
 </head>
 <body>
-  <pm-root></pm-root>
+   <app-root></app-root>  
+   
+   <!-- <pm-kiosk></pm-kiosk>  -->
+
 </body>
+
 </html>
