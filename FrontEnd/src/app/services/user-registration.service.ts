@@ -77,6 +77,12 @@ export class UserRegistrationService {
     return this.http.post(apiUrl, data, requestOptions);
   }
 
+  savedoctor(data: any) {
+    var apiUrl = this.url + "doclogin";
+    return this.http.post(apiUrl, data);
+  }
+
+
   openaiResult(data: any) {
     var apiUrl = this.url + "predict";
     return this.http.post(apiUrl, { chat: data });

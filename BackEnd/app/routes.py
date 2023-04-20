@@ -8,7 +8,7 @@ from fastapi import APIRouter, Body, Request, Form,\
 from fastapi.encoders import jsonable_encoder
 from typing import List
 from bson.objectid import ObjectId
-from app.models import Otp, Phone, UserOtp, Profile, User, UserResponse, ChatText, ProfileItems, websockettest, ProfileId, Episodes
+from app.models import Otp, Phone, UserOtp, Profile, doctor, UserResponse, ChatText, ProfileItems, websockettest, ProfileId, Episodes
 from app.oauth2 import AuthJWT
 from . import utils
 from . import oauth2
@@ -158,6 +158,16 @@ def summary(request: Request, chat: Episodes):
         }
     }}
     )
+    doc_project = request.app.database["doctor"].find()
+    for doc in doc_project:
+        project = request.app.database["doctor"].update_one({'_id': doc["_id"]}, 
+        { '$push': { 
+            'profile': {
+                'created_at' : created_at.strftime('%B %d %Y - %H:%M:%S'),
+                "profile_id": chat.id
+            }
+        }}
+        )
 
     return message
 
@@ -225,3 +235,26 @@ async def chat(websocket: WebSocket):
             response['message'] = "left"
             await manager.broadcast(response)
 
+
+@router.post('/doclogin')
+def login(request: Request, payload: doctor, response: Response):
+    # Check if the user exist
+    #import pdb;pdb.set_trace()
+    new_project = request.app.database["doctor"].find_one({'name': payload.username })
+    list_a = []
+    if new_project and new_project['password']==payload.password:
+        #doc_project = request.app.database["doctor"].find()
+        profiles = new_project["profile"]
+        for doc in profiles:
+            id = doc["profile_id"]
+            p_project = request.app.database["profile"].find_one({'_id':ObjectId(id)})
+            list_a.append(p_project)
+        return {'profiles':  json.loads(json_util.dumps(list_a))}
+        #response = json.loads(json_util.dumps(new_project)) 
+       
+    else:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT,
+                            detail='User does not exist.')
+    
+    
+    
