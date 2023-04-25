@@ -59,7 +59,6 @@ I am sorry to hear that. You should rest and take care of yourself.
  Patient: I didn't take any medicine right now
 Bot: 
 It is best to take medicine for headache as soon as possible. Have you tried any home remedies? 
-
  Patient: suggest medicine
 Bot: 
 It is best to take medicine for headache as soon as possible. Have you tried any home remedies? 

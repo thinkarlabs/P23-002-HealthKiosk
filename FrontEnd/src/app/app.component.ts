@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { WebsocketService } from './services/websocket.service';
 // import {HttpClient, HttpHeaders} from '@angular/common/http';
 // import {UserRegistrationService} from './user-registration.service';
 @Component({
@@ -11,7 +13,8 @@ export class AppComponent {
 title = 'angularwebcam';
 
 router: string;
-constructor(private _router: Router){
+constructor(private _router: Router,public webSocketService: WebsocketService){
+    this.webSocketService.connect();
   
     this.router = _router.url; 
 }

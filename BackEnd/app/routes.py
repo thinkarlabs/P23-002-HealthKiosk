@@ -188,52 +188,56 @@ def register_user(request: Request, response: Response, user: RegisterValidator)
  
     response.set_cookie(key="X-Authorization", value=user.username, httponly=True)"""
 
+# @router.get("/users")
+# def getpatient( request: Request, response: Response, profile_id: ProfileId):
+#     new_project =request.app.database["profile"].find_one({'_id':ObjectId(profile_id.id)})
+#     response = json.loads(json_util.dumps(new_project))
+#     return {'patient': response}
+# class SocketManager:
+#     def __init__(self):
+#         self.active_connections: List[(WebSocket, str)] = []
 
-class SocketManager:
-    def __init__(self):
-        self.active_connections: List[(WebSocket, str)] = []
+#     async def connect(self, websocket: WebSocket, user: str):
+#         await websocket.accept()
+#         self.active_connections.append((websocket, user))
 
-    async def connect(self, websocket: WebSocket, user: str):
-        await websocket.accept()
-        self.active_connections.append((websocket, user))
+#     def disconnect(self, websocket: WebSocket, user: str):
+#         self.active_connections.remove((websocket, user))
 
-    def disconnect(self, websocket: WebSocket, user: str):
-        self.active_connections.remove((websocket, user))
-
-    async def broadcast(self, data: dict):
-        for connection in self.active_connections:
-            await connection[0].send_json(data)
+#     async def broadcast(self, data: dict):
+#         for connection in self.active_connections:
+#             await connection[0].send_json(data)
 
 
-manager = SocketManager()
+# manager = SocketManager()
 
-@router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message text was: {data}")
+# @router.websocket("/ws")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket.accept()
+#     while True:
+#         data = await websocket.receive_text()
+#         await websocket.send_text(f"Message text was: {data}")
 
-@router.websocket("/api/chat")
-async def chat(websocket: WebSocket):
-    #import pdb;pdb.set_trace()
-    sender = "sunil" #websocket.cookies.get("X-Authorization")
+# @router.websocket("/api/chat")
+# async def chat(websocket: WebSocket):
+#     #import pdb;pdb.set_trace()
+#     sender = "sunil" #websocket.cookies.get("X-Authorization")
 
-    if sender:
-        await manager.connect(websocket, sender)
-        response = {
-            "sender": sender,
-            "message": "got connected"
-        }
-        await manager.broadcast(response)
-        try:
-            while True:
-                data = await websocket.receive_json()
-                await manager.broadcast(data)
-        except WebSocketDisconnect:
-            manager.disconnect(websocket, sender)
-            response['message'] = "left"
-            await manager.broadcast(response)
+#     if sender:
+#         await manager.connect(websocket, sender)
+#         response = {
+#             "sender": sender,
+#             "message": "got connected"
+#         }
+#         await manager.broadcast(response)
+#         try:
+#             while True:
+#                 data = await websocket.receive_json()
+#                 await manager.broadcast(data)
+#         except WebSocketDisconnect:
+#             manager.disconnect(websocket, sender)
+#             response['message'] = "left"
+#             await manager.broadcast(response)
 
 
 @router.post('/doclogin')
@@ -244,12 +248,16 @@ def login(request: Request, payload: doctor, response: Response):
     list_a = []
     if new_project and new_project['password']==payload.password:
         #doc_project = request.app.database["doctor"].find()
-        profiles = new_project["profile"]
-        for doc in profiles:
-            id = doc["profile_id"]
-            p_project = request.app.database["profile"].find_one({'_id':ObjectId(id)})
-            list_a.append(p_project)
-        return {'profiles':  json.loads(json_util.dumps(list_a))}
+        try:
+            profiles = new_project["profile"]
+        
+            for doc in profiles:
+                id = doc["profile_id"]
+                p_project = request.app.database["profile"].find_one({'_id':ObjectId(id)})
+                list_a.append(p_project)
+        except:
+            pass
+        return {'patient':  json.loads(json_util.dumps(list_a))}
         #response = json.loads(json_util.dumps(new_project)) 
        
     else:

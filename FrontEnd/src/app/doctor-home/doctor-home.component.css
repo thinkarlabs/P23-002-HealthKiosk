@@ -1,6 +1,24 @@
 .navbarCollapse{
     text-align: end;
-    align-self: end
-    ;
+    align-self: end ;
+    justify-content: flex-end;
+    align-items: flex-end;
     
 }
+.nav-link{
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ 
+.button {
+    margin-top: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+ 

@@ -77,12 +77,6 @@ export class UserRegistrationService {
     return this.http.post(apiUrl, data, requestOptions);
   }
 
-  savedoctor(data: any) {
-    var apiUrl = this.url + "doclogin";
-    return this.http.post(apiUrl, data);
-  }
-
-
   openaiResult(data: any) {
     var apiUrl = this.url + "predict";
     return this.http.post(apiUrl, { chat: data });
@@ -92,12 +86,24 @@ export class UserRegistrationService {
     var apiUrl = this.url + "summary";
     return this.http.post(apiUrl, data);
   }
+  savedoctor(data: any) {
+    var apiUrl = this.url + "doclogin";
+    console.warn("saved",data);
+    return this.http.post(apiUrl, data);
+  }
+  pateint(){
+    var apiUrl = this.url + "users";
+    var auth_token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + auth_token,
+    });
 
-  // saveEpisodesummary(data: any){
-  //   var apiUrl = this.url + "summary";
-  //   return this.http.post(apiUrl, { chat: data });
+    const requestOptions = { headers: headers };
+    return this.http.get(apiUrl, requestOptions);
+  }
 
-  // }
+ 
 
 
 }

@@ -68,7 +68,6 @@ class Episodes(BaseModel):
 class websockettest(BaseModel):
     #id: str = Field(default_factory=uuid.uuid4, alias="_id")
     username: str = Field(...)
-
 class doctor(BaseModel):
     username:str
     password: str

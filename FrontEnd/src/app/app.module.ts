@@ -53,6 +53,7 @@ import { ConfirmpageComponent } from './confirmpage/confirmpage.component';
     HttpClientModule,
     WebcamModule,
     FormsModule,
+   
     
   
   ],
