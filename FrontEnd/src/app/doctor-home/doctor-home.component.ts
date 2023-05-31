@@ -104,9 +104,12 @@ export class DoctorHomeComponent {
   onCall(){
     this.router.navigate(['/episode_call']);
   }
-  onConfirm(){
-    this.router.navigate(['/confirmpage']);
+  onConfirm(id:any){
+    this.router.navigate(['/confirmpage', id]);
+    debugger;
+    //this.router.navigate(['episode', id]);
   }
+
   
 }
 

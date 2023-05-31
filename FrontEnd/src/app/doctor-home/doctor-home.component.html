@@ -61,6 +61,7 @@
 			  
 				<tr>
 				  <td class="col-1">
+					
 					<img src="{{user.profile_pic}}" style="width:60px;height:60px" class="card-img-top img-fluid rounded-circle" alt="...">
 				  </td>
 				  <!-- <td class="col-1 align-self-start">{{profile.profile_name}}</td> -->
@@ -68,10 +69,11 @@
 				  <td class="col-1">{{user.profile_gender}} , {{user.profile_age}} yrs</td>
 				  <td class="col-3">{{user.episodes[0].created_at}} </td>
 				  <td class="col-4">{{user.episodes[0].summary}}</td>
+				  <input type="hidden" id="ProfId" name="ProfId" value={{user._id.$oid}}>
 				  <td class="col-4 align-self-end">
 					<td class="col-2 align-self-end">
 					<!-- <i class="bi bi-telephone-outbound p-2 align-self-end"(click)="onCall()" ></i> -->
-					<i class="bi bi bi-check-square p-2 "style="align-self-end" (click)="onConfirm()"></i>
+					<i class="bi bi bi-check-square p-2 "style="align-self-end" (click)="onConfirm(user._id.$oid)"></i>
 				</td>
 				
 				</tr>

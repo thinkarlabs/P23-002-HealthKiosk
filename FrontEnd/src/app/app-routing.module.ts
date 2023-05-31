@@ -25,7 +25,7 @@ const routes: Routes = [
   { path:'episode_wait', component:EpisodeWaitComponent},
   { path: 'episode_confirm',component:EpisodeConfirmComponent},
   { path: 'episode_call',component:EpisodeCallComponent},
-  { path: 'confirmpage',component:ConfirmpageComponent},
+  { path: 'confirmpage/:id',component:ConfirmpageComponent},
   { path:'user_episode',component:UserEpisodeComponent},
 ];
 

@@ -9,7 +9,16 @@ import { UserRegistrationService } from '../services/user-registration.service';
 })
 export class ConfirmpageComponent {
   Patient: any;
+  Episode: any;
   constructor(private router:Router,private Http: HttpClient,private http: UserRegistrationService){
+    var id = window.location.pathname.split("/").pop()
+    //console.log(this.Episode);
+    http.getProfile(id).subscribe((data) =>{
+      console.warn("get api cons data", data);
+      debugger;
+      this.Episode =  data["profile"]
+    })
+
 
   }
   // ngOnInit(){

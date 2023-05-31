@@ -14,6 +14,7 @@ from . import utils
 from . import oauth2
 from  app.chat import get_response, get_transcript_summary
 
+#router = APIRouter(prefix="/api")
 router = APIRouter()
 
 
@@ -23,6 +24,14 @@ def create_user(request: Request, response: Response, payload: Phone = Body(...)
     print("Your OTP is - ",otp)
     c_code = "+91"
     verified_number = c_code + str(payload.number)
+    import requests
+
+    url = "https://rubixapi.azurewebsites.net/sms/send"
+    headers = {"rubix-api-key": "f5882d56-3030-4d3e-86db-17ef10f2a50d"}
+    msg_to = verified_number #Valid phone no
+    msg_body = otp # Message to be sent.
+    payload_json = {"msg_to":msg_to,"msg_body":msg_body}
+    response = requests.request("POST", url, json=payload_json, headers=headers)    
     """try:
         message = request.app.client.messages.create(
             body='Secure Device OTP is - ' + str(otp) + 'Dont share it.',
